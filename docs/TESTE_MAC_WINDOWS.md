@@ -5,12 +5,14 @@ Este roteiro descreve uma validação manual; sua execução ainda está pendent
 
 ## Arquivos
 
-Release de teste [1.5.4 publicada](https://github.com/gleidsoncunha-dev/myubbe-alldesk/releases/tag/myubbe-v1.5.4), com CI e empacotamento aprovados.
+Lote atual: **1.5.5**, com servidor próprio e configuração padrão integrada.
+Conferir no [handoff](HANDOFF.md) se a publicação dos novos pacotes já terminou;
+os links abaixo ficam disponíveis somente após o sucesso do workflow.
 
 | Computador | Arquivo da release MyUbbe |
 | --- | --- |
-| Windows 11 x64 | [myubbe-alldesk-1.5.4-x86_64.exe](https://github.com/gleidsoncunha-dev/myubbe-alldesk/releases/download/myubbe-v1.5.4/myubbe-alldesk-1.5.4-x86_64.exe), primeiro teste portátil |
-| Mac Intel | [myubbe-alldesk-1.5.4-x86_64.dmg](https://github.com/gleidsoncunha-dev/myubbe-alldesk/releases/download/myubbe-v1.5.4/myubbe-alldesk-1.5.4-x86_64.dmg) |
+| Windows 11 x64 | [myubbe-alldesk-1.5.5-x86_64.exe](https://github.com/gleidsoncunha-dev/myubbe-alldesk/releases/download/myubbe-v1.5.5/myubbe-alldesk-1.5.5-x86_64.exe), primeiro teste portátil |
+| Mac Intel | [myubbe-alldesk-1.5.5-x86_64.dmg](https://github.com/gleidsoncunha-dev/myubbe-alldesk/releases/download/myubbe-v1.5.5/myubbe-alldesk-1.5.5-x86_64.dmg) |
 
 Os arquivos `aarch64` correspondem a outra arquitetura. A release deve estar
 publicada, com o build completo aprovado, antes de iniciar este roteiro.
@@ -20,6 +22,10 @@ publicada, com o build completo aprovado, antes de iniciar este roteiro.
 1. Mantenha sua sessão atual de acesso ao Windows aberta durante o teste.
 2. Abra o MyUbbe AllDesk portátil no Windows e confira nome, ícone e versão.
 3. Abra o cliente Intel no Mac e confira os mesmos elementos no Monterey.
+   Os dois devem usar `195.182.200.177` como servidor ID/Relay e a chave do
+   [guia de configuração](../deploy/vps/README.md). A versão 1.5.5 fornece
+   esses defaults; ajustes manuais anteriores prevalecem. Na 1.5.4, importar
+   o perfil ou preencher os campos de Rede antes de conectar. Servidor API vazio.
 4. No Mac, informe o ID mostrado pelo **MyUbbe AllDesk do Windows** e use a
    autenticação apresentada pelo aplicativo. Cada instalação tem sua identidade
    e configuração próprias; o ID da instalação RustDesk anterior pode diferir.
