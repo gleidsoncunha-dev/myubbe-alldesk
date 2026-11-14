@@ -63,7 +63,8 @@ Captura, protocolo, permissões, consentimento, autenticação, criptografia e t
 - A revisão dos overrides Xcode encontrou bundle ID antigo nos três perfis do target; todos foram alinhados antes da publicação. A correção recebe nova rodada de CI, pois AppInfo.xcconfig sozinho não prevalecia sobre essas configurações.
 - CI `52934ae83`: Windows x64, Windows ARM64 e Mac Apple Silicon passaram. Mac Intel e Linux perderam comunicação com os runners; foram reexecutados isoladamente. O alvo Monterey foi informado depois dessa rodada e exige validação da configuração explícita de deployment target.
 - O conector GitHub retornou 403 no fork novo; a CLI já autenticada foi utilizada. GitHub Actions foi ativado no fork.
-- Próxima rodada: validar o lote Windows + Mac completo antes de merge e release. Não há pacote MyUbbe publicado nem teste de conexão MacBook → Windows 11 concluído.
+- Rodada `916c9b82b`: CI Linux aprovado em https://github.com/gleidsoncunha-dev/myubbe-alldesk/actions/runs/43601983142. Build Windows ARM64 aprovado (os testes Rust dessa arquitetura são omitidos pelo workflow herdado). Mac ARM64 passou build e testes Rust, mas o gate novo falhou pela ordem dos argumentos de `lipo`: o caminho precisa preceder `-verify_arch`, que aceita uma lista de arquiteturas. Chamada corrigida; exige nova execução do gate antes de merge/publicação. Windows x64 e Mac Intel ainda em execução nessa consulta.
+- Roteiro de homologação do equipamento: [TESTE_MAC_WINDOWS.md](TESTE_MAC_WINDOWS.md). Não há pacote MyUbbe publicado nem teste de conexão MacBook → Windows 11 concluído.
 
 Compilação/testes nativos locais dependem de SDKs Rust/Flutter e ferramentas C++/LLVM/vcpkg, ausentes do PATH e dos locais padrão conferidos. Python 3.14, Pillow 12.2 e PyYAML 6 estão disponíveis fora do PATH. Build macOS é executado nos runners Mac do GitHub; não foi inspecionado no MacBook do titular.
 

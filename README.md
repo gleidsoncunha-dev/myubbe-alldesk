@@ -9,6 +9,7 @@ O alvo do cliente Intel é macOS Monterey 12.0 ou posterior; Apple Silicon usa
 
 Versão do fork: **1.5.4** (base RustDesk 1.5.3). Veja
 [o handoff](docs/HANDOFF.md) para validação, limitações e publicação.
+O [roteiro Mac → Windows](docs/TESTE_MAC_WINDOWS.md) descreve o primeiro teste nos equipamentos.
 O código original e esta distribuição permanecem sob a [AGPL-3.0](LICENCE).
 
 <p align="center">

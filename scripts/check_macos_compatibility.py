@@ -33,7 +33,7 @@ def check_bundle(app, architecture, maximum):
         with path.open("rb") as source:
             if source.read(4) not in magic:
                 continue
-        subprocess.run(["xcrun", "lipo", "-verify_arch", arch, str(path)], check=True)
+        subprocess.run(["xcrun", "lipo", str(path), "-verify_arch", arch], check=True)
         report = subprocess.check_output(
             ["xcrun", "vtool", "-show-build", "-arch", arch, str(path)], text=True)
         minimums = re.findall(r"^\s*minos\s+([\d.]+)\s*$", report, re.M)
