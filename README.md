@@ -1,3 +1,13 @@
+# MyUbbe AllDesk
+
+Personalização do RustDesk para MyUbbe, com identidade visual reutilizada do
+MyUbbe CRM. A primeira etapa contempla o nome nativo do Windows, metadados e
+ícones, além dos logotipos claro e escuro da interface Flutter.
+
+Versão do fork: **1.5.4** (base RustDesk 1.5.3). Veja
+[o handoff](docs/HANDOFF.md) para validação, limitações e publicação.
+O código original e esta distribuição permanecem sob a [AGPL-3.0](LICENCE).
+
 <p align="center">
   <img src="res/logo-header.svg" alt="RustDesk - Your remote desktop"><br>
   <a href="#raw-steps-to-build">Build</a> •
