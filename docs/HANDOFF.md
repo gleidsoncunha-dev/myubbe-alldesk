@@ -36,6 +36,7 @@ Não foi usada a arte com o sufixo CRM nem redesenhado o símbolo. Os logotipos 
 - Windows Flutter: `MyUbbeAllDesk.exe`; recursos de versão, ícone, nome e descrição atualizados. O payload portátil usa o mesmo nome, separando também o diretório temporário do RustDesk oficial.
 - MSI: gerador recebe `--app-name MyUbbeAllDesk --manufacturer MyUbbe`, alinhando produto, serviço e registro. O arquivo de licença original é restaurado byte a byte após o pré-processamento, pois o script herdado substitui autoria ao trocar a marca.
 - Mac: `MyUbbeAllDesk.app` / executável `MyUbbeAllDesk`, bundle `com.myubbe.alldesk`, URL `myubbealldesk`. O módulo Swift conserva `RustDesk` para manter as classes declaradas no XIB; isso é um nome interno.
+- Os três perfis do target Xcode também usam `com.myubbe.alldesk`, pois sobrescrevem AppInfo.xcconfig. O identificador público de equipe Apple herdado foi removido desses perfis; assinatura de desenvolvimento ad hoc permanece, sem presumir uma conta/certificado da MyUbbe.
 - `build.py`, esquema/produto Xcode e workflow usam os caminhos dos novos binários.
 - Novo `.github/workflows/myubbe-desktop.yml`: release de teste para Windows x64/ARM64 e Mac Intel/Apple Silicon, acionada por tags `myubbe-v*` ou dispatch explícito. Reutiliza o build com `desktop-only: true`; não publica Android/iOS/Linux nem templates comerciais de personalização.
 - CI desktop continua compilando e testando Windows/macOS. CI Linux básico é mantido. Nenhum check obrigatório foi removido nem ignorado para merge.
@@ -51,10 +52,11 @@ Captura, protocolo, permissões, consentimento, autenticação, criptografia e t
 
 - Local: `git diff --check`; leitura de TOML e versões; PNGs comparados byte a byte com o CRM; PNG/ICO/ICNS decodificados; sintaxe Python, YAML/depends e plist validados. Imagens originais e logotipo claro inspecionados.
 - `actionlint 1.7.12`, obtido da release oficial com SHA256 conferido: workflows chamadores desktop/release sem achados. O workflow reutilizado contém dois achados herdados em Android universal (`matrix.job.arch` sem matriz) e Web (`if: False`); confirmados no upstream e preservados fora do escopo desktop.
-- CI Linux do commit `568e084a2`: **success**, incluindo build e testes Rust: https://github.com/gleidsoncunha-dev/myubbe-alldesk/actions/runs/43556984983.
+- CI Linux do commit `d768cb89c`: **success**, incluindo build e testes Rust: https://github.com/gleidsoncunha-dev/myubbe-alldesk/actions/runs/43559553920. A rodada anterior `568e084a2` também passou.
 - Na primeira rodada Flutter, Dart passou em Mac Intel e ARM64; ponte Flutter/Rust e auxiliares de janela Windows também passaram. Essa rodada antecede a inclusão da marca Mac e a renomeação dos binários; não valida o lote final.
 - Bloqueio inicial do Flutter CI (`contents: write` requerido pelo workflow reutilizado) foi corrigido no job chamador, preservando o padrão global de permissões somente leitura. Repositório sem proteção de branch/checks obrigatórios configurados na consulta inicial.
-- Commit/push iniciais: `d7b8cf608` e `568e084a2`; PR em rascunho: https://github.com/gleidsoncunha-dev/myubbe-alldesk/pull/1.
+- Commit/push iniciais: `d7b8cf608`, `568e084a2` e `d768cb89c`; PR em rascunho: https://github.com/gleidsoncunha-dev/myubbe-alldesk/pull/1.
+- A revisão dos overrides Xcode encontrou bundle ID antigo nos três perfis do target; todos foram alinhados antes da publicação. A correção recebe nova rodada de CI, pois AppInfo.xcconfig sozinho não prevalecia sobre essas configurações.
 - O conector GitHub retornou 403 no fork novo; a CLI já autenticada foi utilizada. GitHub Actions foi ativado no fork.
 - Próxima rodada: validar o lote Windows + Mac completo antes de merge e release. Não há pacote MyUbbe publicado nem teste de conexão MacBook → Windows 11 concluído.
 
