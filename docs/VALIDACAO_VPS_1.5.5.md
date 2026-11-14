@@ -53,7 +53,22 @@ Supabase/Redis/WAHA ok. Sem alteração de serviço, banco, DNS, Caddy ou ambien
 ## Limites de homologação
 
 Controle nativo de janelas Windows: pipe indisponível, erro 2. Conector Mac:
-erro interno nas duas tentativas de listar projetos. Configuração e sessão
-visual no MacBook ainda não comprovadas. Perfil importável e guia preparados.
+erro interno nas tentativas de listar projetos e consultar o binding. Sessão
+visual no MacBook ainda não comprovada. Perfil importável e guia preparados.
 Não se declara teste real Mac → Windows concluído. CI dos pacotes tem estado
 próprio no handoff; publicação do servidor não equivale à publicação dos DMGs.
+
+## Atualização final
+
+Por volta de 20:14 BRT, consulta externa de presença confirmou simultaneamente
+`282548778=true` e `496264126=true`. O novo ID corresponde aos primeiros
+dígitos visíveis na captura do Mac; atribuição e visualização ainda aguardam
+confirmação do titular. O VPS passou a ter dois registros. Serviços continuam
+running, zero reinícios, versão de deploy 1.5.5. Windows em execução observado
+em 1.5.4+72. CRM 1.98.31 healthy, Supabase/Redis/WAHA ok. TCP 21115/21116/21117
+externos acessíveis. Isso comprova presença, não autenticação ou vídeo.
+
+Release de pacotes 1.5.5 publicada às 19:21:43 BRT; CI desktop completa aprovada
+às 20:26:20 BRT, com Windows x64/ARM64 e Mac Intel/ARM64. Resultado de build,
+testes e metadados separado do teste real nos equipamentos. O titular pediu
+instrução para o Codex local do VS Code: [prompt preparado](PROMPT_SUPORTE_MAC.md).

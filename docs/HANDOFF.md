@@ -29,23 +29,35 @@ workflow de release; Compose validado pelo Docker real do VPS. Build/testes
 nativos permanecem nos runners Windows/Mac. Novo workflow verifica Compose,
 sintaxe Bash e testes do configurador em Linux.
 
-Commit, CI, publicação e registro real: **em andamento**, ainda não
-declarados concluídos. Controle nativo do Windows indisponível: pipe não
-encontrado (erro 2). O conector do Mac falhou com erro interno ao listar
-projetos; abertura e teste de tela no Mac não estão comprovados por ferramentas.
+Commit/push, CIs e publicações do servidor e dos pacotes: **concluídos**.
+Sessão visual Mac → Windows: **ainda sem confirmação de sucesso**. Controle
+nativo do Windows indisponível: pipe não encontrado (erro 2). O conector Mac
+retornou erro interno. O titular enviou captura do AllDesk aberto no Mac, mas
+não houve inspeção direta/autenticada do equipamento por nossas ferramentas.
 
 CI de configuração do servidor `43642250910`: **success**. Primeira tentativa
 de deploy interrompida antes de iniciar serviços: `git archive` com autocrlf
 herdado do Windows exportou Bash em CRLF. Wrapper corrigido para exportar com
 `core.autocrlf=false` e regra LF explícita para os scripts do deploy. Correção
-do mesmo lote ainda não publicado no VPS, mantendo 1.5.5. Tag dos clientes
+feita antes da publicação desse mesmo lote no VPS, mantendo 1.5.5. Tag dos clientes
 continua apontando para `eb095db8f`; não houve retag nem alteração dos defaults.
 
-Superfície de regressão: em runtime existente, somente `src/branding.rs` passa
-a oferecer defaults de servidor aos clientes Windows/macOS. Workflow desktop
-passa a publicar também o perfil importável e notas sobre o servidor; demais
-arquivos existentes alterados são versão/metadados e documentação. Serviços e
-dados do CRM não são alterados.
+Revisão final de minimização do diff aprovada. Superfície existente alterada:
+
+- `src/branding.rs`: defaults de servidor na inicialização Windows/macOS,
+  necessários para os novos clientes já conhecerem o VPS. Opções manuais e
+  configurações assinadas continuam prevalecendo; protocolos e autenticação
+  permanecem nos caminhos anteriores.
+- `.github/workflows/myubbe-desktop.yml`: publicação do perfil importável e
+  notas correspondentes, necessários para configurar também os clientes antigos.
+- `.gitattributes`: LF nos novos scripts Bash, necessário após a falha real
+  de exportação CRLF no Windows.
+- Somente versão: Cargo/lockfiles raiz e portable, `flutter/pubspec.yaml`,
+  `.github/workflows/flutter-build.yml`, `res/PKGBUILD`, os três RPMs alterados
+  e os dois AppImageBuilder. README e guias existentes mudaram só documentação.
+
+Demais implementações são arquivos novos e específicos de deploy/configuração.
+Nenhum serviço, dado, proxy ou configuração de outro produto foi alterado.
 
 **Publicação VPS concluída:** `d3075efce`, às 18:21 BRT, marker
 `PUBLICACAO_VERIFICADA MyUbbeAllDesk 1.5.5`. Sondas externas passaram em TCP,
@@ -55,13 +67,15 @@ registro real confirmado no servidor e no `keys_confirmed` local. Serviços
 estáveis, zero reinícios, política de boot e permissões verificadas. CRM
 1.98.31 continua healthy. [Evidências e limites](VALIDACAO_VPS_1.5.5.md).
 
-CI servidor final `43642359914`: **success**. CI Linux `43642359812`:
+CI servidor final [43642359914](https://github.com/gleidsoncunha-dev/myubbe-alldesk/actions/runs/43642359914): **success**.
+CI Linux [43642359812](https://github.com/gleidsoncunha-dev/myubbe-alldesk/actions/runs/43642359812):
 **success**, build e testes workspace (212 testes no aplicativo, além das
-outras crates). Release `43642253910`: em andamento. CI desktop `43642359975`
+outras crates). Release `43642253910`: **success**. CI desktop `43642359975`
 foi cancelada sob a suposição incorreta de duplicação integral e depois
 **reativada**: a inspeção dos `if` mostrou que a release omite os testes
-Rust/Dart quando `upload-artifact=true`. Aguardar a CI desktop específica para
-esses testes; não se declara a tentativa cancelada aprovada. Execuções Linux/desktop
+Rust/Dart quando `upload-artifact=true`. A tentativa 2 terminou **success**,
+em 14/11/2026 às **20:26:20 BRT**, no commit `d3075efce`. Não se declara a
+tentativa cancelada aprovada. Execuções Linux/desktop
 anteriores do commit `eb095db8f` canceladas por terem sido substituídas pelas
 do commit de correção; não se declaram aprovadas nem substituem as atuais.
 Release de instaladores concluída na tag original, sem retag; resultado abaixo.
@@ -94,8 +108,13 @@ Registro/presença não comprovam autenticação ou visualização da sessão.
 com `draft=false`, `prerelease=true`, seis pacotes desktop, SBOM e dois perfis
 de configuração (JSON e texto importável): nove assets. HTTP público sem
 autenticação: Mac Intel DMG e Windows x64 EXE responderam 200; perfil TXT 200
-e conteúdo idêntico ao exportador versionado. Testes unitários desktop seguem
-na execução específica `43642359975`, tentativa 2, ainda em andamento.
+e conteúdo idêntico ao exportador versionado. Testes unitários desktop
+aprovados na [execução específica 43642359975](https://github.com/gleidsoncunha-dev/myubbe-alldesk/actions/runs/43642359975),
+tentativa 2: Windows x64 **258 + 2 clipboard**; Mac ARM64 **260 + 22 clipboard**.
+O teste novo `branding::tests::published_profile_matches_embedded_server`
+passou nos dois. Dart passou nos dois Macs e os quatro builds desktop passaram.
+O workflow herdado omite Rust tests em Windows ARM64 e Mac Intel; isso não foi
+alterado neste lote. Não houve remoção ou afrouxamento de checks.
 
 Gate Mac na release: 22 binários por arquitetura, mínimos 12.0 Intel e 12.3
 ARM64, nenhum mínimo acima de Monterey 12.7.6. Windows x64 baixado e inspecionado
@@ -113,7 +132,14 @@ Mac ad hoc, como no lote anterior; nenhuma notarização/assinatura comercial no
 O Windows em execução nesta homologação é o portátil 1.5.4, configurado para o
 VPS sem alterar suas credenciais. Os novos instaladores 1.5.5 estão publicados,
 mas não foram instalados automaticamente nos equipamentos. A sessão visual
-Mac → Windows continua aguardando configuração/aceite do titular.
+Mac → Windows continua aguardando o resultado da nova tentativa do titular,
+após os dois IDs serem confirmados online. O prompt local no VS Code permite
+continuar o diagnóstico sem depender do conector remoto indisponível.
+
+Git: implementação `eb095db8f`, correção do exportador/deploy `d3075efce` e
+fechamentos documentais enviados a `origin/master` sem force. Tag
+`myubbe-v1.5.5` preservada no commit original dos clientes. Fechamento documental
+do mesmo lote conserva 1.5.5 e não exige outro artefato ou novo deploy.
 
 ## Escopo autorizado
 
