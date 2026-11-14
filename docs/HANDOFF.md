@@ -69,11 +69,25 @@ Release de instaladores concluída na tag original, sem retag; resultado abaixo.
 O titular apresentou captura do Mac às 18:26 com o destino `496264126` offline.
 Consulta externa de presença pelo protocolo `OnlineRequest` na porta 21115
 confirmou esse Windows **online** no servidor próprio (bit de estado 0x80).
-SQLite do VPS ainda contém somente o registro Windows: o Mac não está
-registrado no mesmo servidor. Orientados os três campos de Rede para o Mac;
+Na primeira consulta, SQLite do VPS continha somente o registro Windows.
+Orientados os três campos de Rede para o Mac;
 conexão visual ainda aguarda confirmação. O titular informou que tentaria
 reconectar seu `codex-mcp`; listagem e consulta do binding continuaram falhando
 com erro interno. Nenhum comando ou alteração foi executado no Mac.
+
+O titular confirmou que ainda recebia "destino offline ou não existe" e pediu
+uma instrução para seu Codex local no VS Code. Preparado e publicado
+[PROMPT_SUPORTE_MAC.md](PROMPT_SUPORTE_MAC.md), com escopo local, backups,
+perfis de usuário/serviço e preservação de credenciais e proteções do macOS.
+
+**Nova conferência por volta de 20:14 BRT:** VPS passou a conter dois registros;
+consulta externa `OnlineRequest` confirmou `282548778=true` e
+`496264126=true` simultaneamente. O novo ID começa com os dígitos visíveis
+na captura do Mac, mas a atribuição ao equipamento aguarda confirmação do
+titular. Orientado encerrar a tentativa antiga e iniciar nova conexão.
+Serviços running, zero reinícios; CRM 1.98.31 healthy, Supabase/Redis/WAHA ok;
+portas TCP externas acessíveis. Cliente Windows observado ainda em 1.5.4+72.
+Registro/presença não comprovam autenticação ou visualização da sessão.
 
 **Instaladores 1.5.5 publicados:** workflow `43642253910` **success**, em
 14/11/2026 às **19:21:43 BRT**. [Release](https://github.com/gleidsoncunha-dev/myubbe-alldesk/releases/tag/myubbe-v1.5.5)

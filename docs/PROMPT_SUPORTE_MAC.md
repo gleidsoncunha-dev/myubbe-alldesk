@@ -11,7 +11,10 @@ Estado verificado em 14/11/2026:
 - Servidor próprio funcionando em 195.182.200.177.
 - Windows de destino, ID 496264126, confirmado ONLINE nesse servidor.
 - TCP, UDP, NAT e relay testados externamente com sucesso.
-- O Mac não apareceu registrado no VPS e informou "destino offline ou não existe".
+- Inicialmente o Mac não apareceu registrado e informou "destino offline ou não existe".
+- Atualização por volta de 20:14: os IDs 282548778 e 496264126 foram confirmados
+  ONLINE no VPS ao mesmo tempo. Confira o ID real do Mac e o estado atual antes
+  de editar. Se já conectar, preserve a configuração e registre o resultado.
 
 Configuração correta:
 Servidor ID: 195.182.200.177
