@@ -5,9 +5,9 @@ Este roteiro descreve uma validação manual; sua execução ainda está pendent
 
 ## Arquivos
 
-Lote atual: **1.5.5**, com servidor próprio e configuração padrão integrada.
-Conferir no [handoff](HANDOFF.md) se a publicação dos novos pacotes já terminou;
-os links abaixo ficam disponíveis somente após o sucesso do workflow.
+Release [1.5.5 publicada](https://github.com/gleidsoncunha-dev/myubbe-alldesk/releases/tag/myubbe-v1.5.5),
+com servidor próprio e configuração padrão integrada. Workflow de publicação
+aprovado; o [handoff](HANDOFF.md) registra separadamente a CI e o teste real.
 
 | Computador | Arquivo da release MyUbbe |
 | --- | --- |

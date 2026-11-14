@@ -64,7 +64,7 @@ Rust/Dart quando `upload-artifact=true`. Aguardar a CI desktop específica para
 esses testes; não se declara a tentativa cancelada aprovada. Execuções Linux/desktop
 anteriores do commit `eb095db8f` canceladas por terem sido substituídas pelas
 do commit de correção; não se declaram aprovadas nem substituem as atuais.
-Release de instaladores continua em execução na tag original, sem retag.
+Release de instaladores concluída na tag original, sem retag; resultado abaixo.
 
 O titular apresentou captura do Mac às 18:26 com o destino `496264126` offline.
 Consulta externa de presença pelo protocolo `OnlineRequest` na porta 21115
@@ -74,6 +74,32 @@ registrado no mesmo servidor. Orientados os três campos de Rede para o Mac;
 conexão visual ainda aguarda confirmação. O titular informou que tentaria
 reconectar seu `codex-mcp`; listagem e consulta do binding continuaram falhando
 com erro interno. Nenhum comando ou alteração foi executado no Mac.
+
+**Instaladores 1.5.5 publicados:** workflow `43642253910` **success**, em
+14/11/2026 às **19:21:43 BRT**. [Release](https://github.com/gleidsoncunha-dev/myubbe-alldesk/releases/tag/myubbe-v1.5.5)
+com `draft=false`, `prerelease=true`, seis pacotes desktop, SBOM e dois perfis
+de configuração (JSON e texto importável): nove assets. HTTP público sem
+autenticação: Mac Intel DMG e Windows x64 EXE responderam 200; perfil TXT 200
+e conteúdo idêntico ao exportador versionado. Testes unitários desktop seguem
+na execução específica `43642359975`, tentativa 2, ainda em andamento.
+
+Gate Mac na release: 22 binários por arquitetura, mínimos 12.0 Intel e 12.3
+ARM64, nenhum mínimo acima de Monterey 12.7.6. Windows x64 baixado e inspecionado
+sem executar/instalar: PE 8664, produto MyUbbe AllDesk, versão 1.5.5, SHA256
+igual à API. MSI aberto em modo leitura: ProductName MyUbbeAllDesk, fabricante
+MyUbbe, ProductVersion `1.5.5.29911563`, UpgradeCode preservado
+`{2D68606F-3A5E-57AB-BFC4-299DE98249AE}`. Windows sem assinatura comercial e
+Mac ad hoc, como no lote anterior; nenhuma notarização/assinatura comercial nova.
+
+| Pacote x64 | SHA256 conferido |
+| --- | --- |
+| EXE | `a1dd2dc1473d5ca8f8947f8ed01f2849de9cc4b0d4ebdeeb5d6c9793b90f0484` |
+| MSI | `5e16dfe940e8667e6bf296c15cbcb4890c73b7143c035a8dc4f6efb6c09b9820` |
+
+O Windows em execução nesta homologação é o portátil 1.5.4, configurado para o
+VPS sem alterar suas credenciais. Os novos instaladores 1.5.5 estão publicados,
+mas não foram instalados automaticamente nos equipamentos. A sessão visual
+Mac → Windows continua aguardando configuração/aceite do titular.
 
 ## Escopo autorizado
 
