@@ -26,6 +26,7 @@ da versão oficial 1.1.16.
 | Duas conexões ao relay, UUID exclusivo e chave correta | pareadas |
 | Payload sintético A → B e B → A | recebido integralmente |
 | RequestRelay com chave incorreta | conexão rejeitada |
+| OnlineRequest TCP 21115 para o ID Windows | OnlineResponse com bit online 0x80 |
 
 Identificador transitório próprio; sem registrar chaves de outro computador,
 iniciar sessão de desktop ou ler telas. A sonda valida UDP, NAT e relay,

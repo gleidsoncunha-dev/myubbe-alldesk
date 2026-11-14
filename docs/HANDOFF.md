@@ -55,11 +55,23 @@ registro real confirmado no servidor e no `keys_confirmed` local. Serviços
 estáveis, zero reinícios, política de boot e permissões verificadas. CRM
 1.98.31 continua healthy. [Evidências e limites](VALIDACAO_VPS_1.5.5.md).
 
-CI servidor final `43642359914`: **success**. CI Linux `43642359812`, desktop
-`43642359975` e release `43642253910`: em andamento. Execuções Linux/desktop
+CI servidor final `43642359914`: **success**. CI Linux `43642359812`:
+**success**, build e testes workspace (212 testes no aplicativo, além das
+outras crates). Release `43642253910`: em andamento. CI desktop `43642359975`
+cancelada por duplicar o mesmo workflow nativo executado integralmente pela
+release; não se declara essa execução aprovada. Execuções Linux/desktop
 anteriores do commit `eb095db8f` canceladas por terem sido substituídas pelas
 do commit de correção; não se declaram aprovadas nem substituem as atuais.
 Release de instaladores continua em execução na tag original, sem retag.
+
+O titular apresentou captura do Mac às 18:26 com o destino `496264126` offline.
+Consulta externa de presença pelo protocolo `OnlineRequest` na porta 21115
+confirmou esse Windows **online** no servidor próprio (bit de estado 0x80).
+SQLite do VPS ainda contém somente o registro Windows: o Mac não está
+registrado no mesmo servidor. Orientados os três campos de Rede para o Mac;
+conexão visual ainda aguarda confirmação. O titular informou que tentaria
+reconectar seu `codex-mcp`; listagem e consulta do binding continuaram falhando
+com erro interno. Nenhum comando ou alteração foi executado no Mac.
 
 ## Escopo autorizado
 
