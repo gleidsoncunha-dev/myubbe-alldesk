@@ -1,0 +1,23 @@
+name: MyUbbe AllDesk desktop release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release-tag:
+        description: Tag da versão MyUbbe a publicar
+        required: true
+        type: string
+  push:
+    tags:
+      - 'myubbe-v*'
+
+jobs:
+  release-desktop:
+    permissions:
+      contents: write
+    uses: ./.github/workflows/flutter-build.yml
+    with:
+      upload-artifact: true
+      upload-tag: ${{ inputs.release-tag || github.ref_name }}
+      desktop-only: true
+      publish-update-metadata: false

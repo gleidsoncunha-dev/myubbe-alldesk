@@ -1,114 +1,69 @@
 # MyUbbe AllDesk — handoff
 
-## Escopo e base
+## Escopo autorizado
 
 - Data: 14/11/2026, America/Sao_Paulo.
-- Produto definido pelo titular: **MyUbbe AllDesk**.
-- Origem: https://github.com/rustdesk/rustdesk.
-- Base exata: `a89a82f911d9e1bfe742e79ccb2aeaaa3c950d20` (RustDesk 1.5.3).
+- Produto: **MyUbbe AllDesk**. Marca nos clientes **Windows e Mac**, conforme confirmação do titular. Cenário inicial: MacBook acessando Windows 11.
+- Base: https://github.com/rustdesk/rustdesk, commit `a89a82f911d9e1bfe742e79ccb2aeaaa3c950d20` (RustDesk 1.5.3).
 - Fork: https://github.com/gleidsoncunha-dev/myubbe-alldesk.
-- Pasta local: `C:\PROJETOS\rustdesk`.
-- `upstream` aponta para o RustDesk; `origin` aponta para o fork MyUbbe.
-- O `AGENTS.md` original foi lido e permanece aplicável.
-- O usuário autorizou reutilizar a imagem da marca existente no CRM.
+- Pasta: `C:\PROJETOS\myubbe-alldesk`. `origin` é o fork; `upstream` é RustDesk.
+- O clone inicial em `rustdesk` foi movido, sem duplicar código. Histórico e submódulo foram conferidos novamente com `git fsck --connectivity-only` e `git submodule status`.
+- O Windows bloqueou a renomeação direta. A origem ficou só com uma `.git` vazia. A revisão automática de aprovação rejeitou a remoção dessas pastas vazias com `blocked by policy`, sem motivo mais específico; elas foram preservadas.
+- O `AGENTS.md` original foi lido e continua aplicável. Não há mudança em submódulos.
 
 ## Lote inicial — 1.5.4 / Flutter 1.5.4+72
 
-Mantemos o esquema SemVer existente e incrementamos o patch do fork. A versão
-1.5.4 identifica esta personalização, não uma versão oficial nova do RustDesk.
-Cargo.toml, as entradas do aplicativo e do empacotador no Cargo.lock,
-libs/portable/Cargo.toml e seu lockfile, pubspec.yaml, a versão do workflow e
-os metadados RPM/Arch/AppImage foram sincronizados. Versões de dependências são
-preservadas.
+Mantido SemVer, com incremento de patch do fork. Esta versão não representa uma nova versão oficial do RustDesk. Cargo, lockfiles do aplicativo/empacotador, Flutter, workflow, RPM/Arch/AppImage estão sincronizados; versões de dependências não foram alteradas.
 
-A inicialização do nome Windows usa `MyUbbeAllDesk`. O identificador não contém
-espaços porque o projeto também o usa em URI, serviços, arquivos e registros.
-Os metadados do produto usam **MyUbbe AllDesk**. O nome padrão é aplicado antes
-da leitura da configuração de cliente; uma configuração personalizada existente
-continua podendo definir seu próprio nome. Nenhum submódulo foi alterado.
+O nome técnico é `MyUbbeAllDesk`, sem espaços porque o projeto o utiliza em serviços, URI, diretórios e arquivos. Nome de exibição e metadados: **MyUbbe AllDesk**. O módulo isolado `src/branding.rs` inicializa o nome padrão no carregamento de cliente Windows/macOS; configurações personalizadas assinadas continuam podendo definir outro nome.
 
-O nome personalizado seleciona os caminhos de cliente personalizado já existentes
-no RustDesk: configurações, serviço e instalação próprios e ausência da consulta
-automática de atualização do cliente oficial. Não compartilhará automaticamente
-a identidade/configuração de uma instalação RustDesk anterior. Um servidor
-próprio e um canal próprio de atualização ainda precisam ser definidos.
+O nome seleciona os caminhos de cliente personalizado existentes: configuração, serviço e instalação próprios e ausência da atualização automática do cliente oficial. Não migra automaticamente configurações/identidade de instalações RustDesk anteriores. Servidor e canal próprio de atualização ainda não foram definidos.
 
-### Origem das imagens
+### Marca e imagens
 
-Fonte: `C:\PROJETOS\myubbe-crm\public\brand`, commit do CRM
-`e1d46a3fb47a6b004001baa436eb18e80dac3e46`.
+Origem autorizada: `C:\PROJETOS\myubbe-crm\public\brand`, commit `e1d46a3fb47a6b004001baa436eb18e80dac3e46`.
 
-- `logo-myubbe-v2.png`: cópia integral para `res/icon.png` e
-  `flutter/assets/icon.png`.
-- `wordmark-on-light-myubbe-v2.png`: cópia integral para
-  `flutter/assets/logo.png` e `flutter/assets/logo_light.png`.
-- `wordmark-on-dark-myubbe-v2.png`: cópia integral para
-  `flutter/assets/logo_dark.png`.
-- Os ICOs de `res/icon.ico`, `res/tray-icon.ico` e
-  `flutter/windows/runner/resources/app_icon.ico` são conversões da imagem
-  quadrada original, em 16, 24, 32, 48, 64, 128 e 256 pixels.
+- `logo-myubbe-v2.png`: cópias integrais para `res/icon.png`, `res/mac-icon.png` e `flutter/assets/icon.png`.
+- `wordmark-on-light-myubbe-v2.png`: cópias integrais para `flutter/assets/logo.png` e `logo_light.png`.
+- `wordmark-on-dark-myubbe-v2.png`: cópia integral para `flutter/assets/logo_dark.png`.
+- ICOs de Windows/bandeja: conversão da imagem quadrada original em 16, 24, 32, 48, 64, 128 e 256 pixels.
+- `flutter/macos/Runner/AppIcon.icns`: conversão da mesma imagem para o ícone macOS, com oito representações decodificadas na verificação.
 
-Não foi reutilizada a arte com o sufixo CRM. Não há redesenho do símbolo nem
-geração de uma nova marca. Os logotipos usam o carregamento claro/escuro já
-existente no Flutter, sem modificar o layout ou a escala da interface.
+Não foi usada a arte com o sufixo CRM nem redesenhado o símbolo. Os logotipos claro/escuro usam o carregador já existente. Layout e escala visual foram preservados.
 
-### Superfície de alteração
+### Identidade e empacotamento
 
-- `src/common.rs`: um hook de inicialização, somente Windows, no início do
-  carregamento de cliente; implementação isolada em `src/branding.rs`.
-- `src/lib.rs`: declaração do módulo, somente Windows.
-- `flutter/windows/runner/main.cpp`: fallback do título coerente com o nome
-  retornado pelo núcleo.
-- `flutter/windows/runner/Runner.rc`: nome e descrição do produto e marca
-  responsável pela distribuição; copyright original preservado.
-- `Cargo.toml` e `libs/portable/Cargo.toml`: metadados de produto Windows
-  também no binário Rust e no empacotador portátil, com copyright preservado.
-- Imagens: ícones e logotipos usados pelo carregamento existente.
-- Demais alterações: versão, rastreamento dos PNGs e documentação.
+- Windows Flutter: `MyUbbeAllDesk.exe`; recursos de versão, ícone, nome e descrição atualizados. O payload portátil usa o mesmo nome, separando também o diretório temporário do RustDesk oficial.
+- MSI: gerador recebe `--app-name MyUbbeAllDesk --manufacturer MyUbbe`, alinhando produto, serviço e registro. O arquivo de licença original é restaurado byte a byte após o pré-processamento, pois o script herdado substitui autoria ao trocar a marca.
+- Mac: `MyUbbeAllDesk.app` / executável `MyUbbeAllDesk`, bundle `com.myubbe.alldesk`, URL `myubbealldesk`. O módulo Swift conserva `RustDesk` para manter as classes declaradas no XIB; isso é um nome interno.
+- `build.py`, esquema/produto Xcode e workflow usam os caminhos dos novos binários.
+- Novo `.github/workflows/myubbe-desktop.yml`: release de teste para Windows x64/ARM64 e Mac Intel/Apple Silicon, acionada por tags `myubbe-v*` ou dispatch explícito. Reutiliza o build com `desktop-only: true`; não publica Android/iOS/Linux nem templates comerciais de personalização.
+- CI desktop continua compilando e testando Windows/macOS. CI Linux básico é mantido. Nenhum check obrigatório foi removido nem ignorado para merge.
+- Smoke de release: versão e metadados do EXE e versão/nome/bundle ID do aplicativo Mac. Sem certificados, Mac recebe assinatura ad hoc de desenvolvimento e Windows fica sem assinatura Authenticode. Isso não equivale a assinatura comercial/notarização Apple.
 
-Nenhuma alteração em captura, permissões, consentimento, autenticação, protocolo,
-criptografia ou transferência de arquivos. Nome nativo e empacotamento de
-Android, iOS, macOS e Linux ainda não foram personalizados integralmente.
+### Superfície de regressão
 
-## Validação e publicação
+Mudanças existentes estritamente relacionadas à marca: hook e declaração de módulo em `src/common.rs`/`src/lib.rs`; nomes e recursos Windows/CMake; metadados, ícone, produto e esquema Xcode; caminhos Windows/macOS em `build.py`; nomes e comandos de empacotamento no workflow reutilizado; seleção desktop no workflow de CI. Outras alterações são versões, imagens, rastreamento de PNG e documentação.
 
-Validação local aprovada: `git diff --check`, leitura de TOML com `tomllib`,
-coerência das versões, decodificação dos PNGs e de todas as sete resoluções de
-cada ICO. As cópias PNG são idênticas aos arquivos do CRM, verificadas byte a
-byte. Imagens originais e logotipo claro foram inspecionados visualmente.
-A integridade do clone e do submódulo foi verificada com
-`git fsck --connectivity-only`. Compilação e testes Rust/Flutter locais ainda
-dependem dos SDKs e das ferramentas C++/LLVM/vcpkg, ausentes no PATH e nos locais
-padrão conferidos. Python 3.14 com Pillow 12.2 está disponível fora do PATH.
+Captura, protocolo, permissões, consentimento, autenticação, criptografia e transferência de arquivos não foram modificados. Android/iOS/Linux e a interface Sciter de 32 bits não compõem a primeira distribuição MyUbbe.
 
-Branch publicada: `feat/myubbe-branding`, commit inicial `d7b8cf608`.
-PR em rascunho: https://github.com/gleidsoncunha-dev/myubbe-alldesk/pull/1.
-O conector GitHub retornou 403 no fork novo; commit, push e PR foram feitos
-pela CLI já autenticada. GitHub Actions foi ativado no fork.
+## Validação e estado
 
-O primeiro Full Flutter CI encerrou com `startup_failure`: o workflow reutilizado
-exige `contents: write` em jobs de metadados, mas o chamador herdava somente
-`contents: read`. O job chamador em `flutter-ci.yml` recebeu explicitamente a
-permissão necessária; `upload-artifact: false` permanece. Isso corrige o bloqueio
-de validação da configuração herdada, sem mudar o padrão global de permissões do
-fork nem habilitar publicação pelo CI. Reexecução pendente.
+- Local: `git diff --check`; leitura de TOML e versões; PNGs comparados byte a byte com o CRM; PNG/ICO/ICNS decodificados; sintaxe Python, YAML/depends e plist validados. Imagens originais e logotipo claro inspecionados.
+- `actionlint 1.7.12`, obtido da release oficial com SHA256 conferido: workflows chamadores desktop/release sem achados. O workflow reutilizado contém dois achados herdados em Android universal (`matrix.job.arch` sem matriz) e Web (`if: False`); confirmados no upstream e preservados fora do escopo desktop.
+- CI Linux do commit `568e084a2`: **success**, incluindo build e testes Rust: https://github.com/gleidsoncunha-dev/myubbe-alldesk/actions/runs/43556984983.
+- Na primeira rodada Flutter, Dart passou em Mac Intel e ARM64; ponte Flutter/Rust e auxiliares de janela Windows também passaram. Essa rodada antecede a inclusão da marca Mac e a renomeação dos binários; não valida o lote final.
+- Bloqueio inicial do Flutter CI (`contents: write` requerido pelo workflow reutilizado) foi corrigido no job chamador, preservando o padrão global de permissões somente leitura. Repositório sem proteção de branch/checks obrigatórios configurados na consulta inicial.
+- Commit/push iniciais: `d7b8cf608` e `568e084a2`; PR em rascunho: https://github.com/gleidsoncunha-dev/myubbe-alldesk/pull/1.
+- O conector GitHub retornou 403 no fork novo; a CLI já autenticada foi utilizada. GitHub Actions foi ativado no fork.
+- Próxima rodada: validar o lote Windows + Mac completo antes de merge e release. Não há pacote MyUbbe publicado nem teste de conexão MacBook → Windows 11 concluído.
 
-Não foram criadas tags nem releases antes do build.
+Compilação/testes nativos locais dependem de SDKs Rust/Flutter e ferramentas C++/LLVM/vcpkg, ausentes do PATH e dos locais padrão conferidos. Python 3.14, Pillow 12.2 e PyYAML 6 estão disponíveis fora do PATH. Build macOS é executado nos runners Mac do GitHub; não foi inspecionado no MacBook do titular.
 
-Não há binário MyUbbe compilado ou homologação visual/autenticada nesta etapa.
-Não declarar um instalador publicado antes da conclusão do build e da release.
+## Licença e continuação
 
-## Licença e próximos passos
+Preservados `LICENCE`, autoria e copyright do RustDesk. Código sob AGPL-3.0; distribuição comercial deve cumprir as obrigações aplicáveis, inclusive fornecimento do código correspondente. Ativos MyUbbe reutilizados por autorização do titular, sem presumir que tenham a mesma licença do código. Não foram incluídos segredos, certificados ou configurações de produção do CRM.
 
-Preservados `LICENCE`, avisos e autoria do RustDesk. A licença do código é
-AGPL-3.0; distribuição comercial deve cumprir as obrigações aplicáveis, inclusive
-fornecimento do código correspondente. Os ativos MyUbbe são reutilizados por
-autorização do titular, sem presumir que tenham a mesma licença do código.
+Fontes: https://github.com/rustdesk/rustdesk/blob/master/LICENCE e https://rustdesk.com/docs/en/dev/build/windows/.
 
-Fontes: https://github.com/rustdesk/rustdesk/blob/master/LICENCE e
-https://rustdesk.com/docs/en/dev/build/windows/.
-
-Antes de distribuição a clientes: concluir build Windows, inspecionar telas e
-instalação, definir infraestrutura própria, configurar assinatura do instalador
-e disponibilizar o código correspondente à versão distribuída. Não há uso nem
-inclusão de certificados, credenciais ou configurações de produção do CRM.
+Depois do build: inspecionar os pacotes e a interface Windows; validar abertura/permissões no MacBook; testar a conexão real Mac → Windows; definir infraestrutura própria e assinatura comercial antes de distribuição a clientes.

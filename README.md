@@ -1,8 +1,9 @@
 # MyUbbe AllDesk
 
 Personalização do RustDesk para MyUbbe, com identidade visual reutilizada do
-MyUbbe CRM. A primeira etapa contempla o nome nativo do Windows, metadados e
-ícones, além dos logotipos claro e escuro da interface Flutter.
+MyUbbe CRM. A primeira etapa contempla Windows 11 e macOS, com nome nativo,
+identidade dos pacotes, ícones e logotipos claro e escuro da interface Flutter.
+O cenário inicial é acessar o Windows pelo MacBook.
 
 Versão do fork: **1.5.4** (base RustDesk 1.5.3). Veja
 [o handoff](docs/HANDOFF.md) para validação, limitações e publicação.
