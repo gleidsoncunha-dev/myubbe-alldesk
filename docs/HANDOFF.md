@@ -42,6 +42,7 @@ Não foi usada a arte com o sufixo CRM nem redesenhado o símbolo. Os logotipos 
 - Novo `.github/workflows/myubbe-desktop.yml`: release de teste para Windows x64/ARM64 e Mac Intel/Apple Silicon, acionada por tags `myubbe-v*`. Valida tag/Cargo/Flutter/workflow antes do build. Reutiliza o build com `desktop-only: true`; não publica Android/iOS/Linux nem templates comerciais de personalização.
 - Publicação em duas etapas: todos os arquivos são enviados a um rascunho (`draft-release: true`); somente após o sucesso do build completo e a presença dos quatro pacotes Windows, dois DMGs e SBOM, um job final publica a pré-release. A opção de rascunho é desativada por padrão no workflow reutilizado, preservando os demais chamadores.
 - CI desktop continua compilando e testando Windows/macOS. CI Linux básico é mantido. Nenhum check obrigatório foi removido nem ignorado para merge.
+- Os workflows herdados nightly/tag/F-Droid e o atualizador semanal de certificados ficam restritos a `rustdesk/rustdesk`. No fork, publicação usa somente o fluxo MyUbbe desktop; o atualizador herdado, que contém force-push, não pode executar aqui. Consulta inicial após o merge só listou CI, build reutilizado e release MyUbbe registrados; a restrição também fica explícita no código para futuras ativações.
 - Smoke de release: versão e metadados do EXE e versão/nome/bundle ID do aplicativo Mac. Sem certificados, Mac recebe assinatura ad hoc de desenvolvimento e Windows fica sem assinatura Authenticode. Isso não equivale a assinatura comercial/notarização Apple.
 - Compatibilidade Monterey: mínimo 12.0 no Intel e 12.3 no Apple Silicon, alinhando Xcode, CocoaPods, Rust, ambiente do job e triplets vcpkg de codecs. A compilação em um runner novo não é, por si, prova de execução em Monterey.
 - `scripts/check_macos_compatibility.py` verifica arquitetura e mínimos declarados nos Mach-O do bundle com `lipo`/`vtool`, além do mínimo do Info.plist, contra 12.7.6. Registra binários sem mínimo explícito; não substitui abertura e teste no MacBook real.
@@ -56,6 +57,19 @@ Captura, protocolo, permissões, consentimento, autenticação, criptografia e t
 
 - Local: `git diff --check`; leitura de TOML e versões; PNGs comparados byte a byte com o CRM; PNG/ICO/ICNS decodificados; sintaxe Python, YAML/depends e plist validados. Imagens originais e logotipo claro inspecionados.
 - `actionlint 1.7.12`, obtido da release oficial com SHA256 conferido: workflows chamadores desktop/release sem achados. O workflow reutilizado contém dois achados herdados em Android universal (`matrix.job.arch` sem matriz) e Web (`if: False`); confirmados no upstream e preservados fora do escopo desktop.
+
+### Resultado aprovado — commit 2361f1cc1
+
+- [CI Linux](https://github.com/gleidsoncunha-dev/myubbe-alldesk/actions/runs/43606735765): **success**, build e testes Rust.
+- [CI desktop](https://github.com/gleidsoncunha-dev/myubbe-alldesk/actions/runs/43606735893): **success**, Windows x64/ARM64 e Mac Intel/ARM64. Windows x64: 257 testes do aplicativo e 2 de clipboard; Mac ARM64: 259 e 22; testes Dart nas duas arquiteturas Mac. O workflow herdado omite Rust tests em Windows ARM64 e Mac Intel.
+- Gate macOS: 22 Mach-O em cada arquitetura, incluindo aplicativo, serviço e frameworks. Intel usa mínimo 12.0; ARM64 usa 12.3; nenhum mínimo declarado excede 12.7.6. Versão, nome e bundle ID também passaram. Isso não homologa execução no MacBook físico.
+- [PR 1](https://github.com/gleidsoncunha-dev/myubbe-alldesk/pull/1) integrada em `a4f565a8e53fb9e7f9faa50a8c6e0d4f6736002d`, após todos os checks terminarem. Conferido o head exato no merge, sem override administrativo. Branch sem checks obrigatórios adicionais configurados na consulta; nenhum check foi ignorado.
+- `master` local acompanha `origin/master`. Histórico preservado, push e merge sem force.
+- Inspeção de logs por navegador indisponível: host do navegador e canal nativo de apps não disponíveis nesta sessão. Acompanhamento por CLI/API; nenhuma homologação visual/autenticada do produto foi realizada.
+- Publicação dos instaladores: **pendente**, próxima etapa. O código está integrado; ainda não há release MyUbbe publicada.
+
+### Histórico das rodadas anteriores
+
 - CI Linux do commit `d768cb89c`: **success**, incluindo build e testes Rust: https://github.com/gleidsoncunha-dev/myubbe-alldesk/actions/runs/43559553920. A rodada anterior `568e084a2` também passou.
 - Na primeira rodada Flutter, Dart passou em Mac Intel e ARM64; ponte Flutter/Rust e auxiliares de janela Windows também passaram. Essa rodada antecede a inclusão da marca Mac e a renomeação dos binários; não valida o lote final.
 - Bloqueio inicial do Flutter CI (`contents: write` requerido pelo workflow reutilizado) foi corrigido no job chamador, preservando o padrão global de permissões somente leitura. Repositório sem proteção de branch/checks obrigatórios configurados na consulta inicial.
@@ -64,7 +78,7 @@ Captura, protocolo, permissões, consentimento, autenticação, criptografia e t
 - CI `52934ae83`: Windows x64, Windows ARM64 e Mac Apple Silicon passaram. Mac Intel e Linux perderam comunicação com os runners; foram reexecutados isoladamente. O alvo Monterey foi informado depois dessa rodada e exige validação da configuração explícita de deployment target.
 - O conector GitHub retornou 403 no fork novo; a CLI já autenticada foi utilizada. GitHub Actions foi ativado no fork.
 - Rodada `916c9b82b`: CI Linux aprovado em https://github.com/gleidsoncunha-dev/myubbe-alldesk/actions/runs/43601983142. Build Windows ARM64 aprovado (os testes Rust dessa arquitetura são omitidos pelo workflow herdado). Mac ARM64 passou build e testes Rust, mas o gate novo falhou pela ordem dos argumentos de `lipo`: o caminho precisa preceder `-verify_arch`, que aceita uma lista de arquiteturas. Chamada corrigida; exige nova execução do gate antes de merge/publicação. Windows x64 e Mac Intel ainda em execução nessa consulta.
-- Roteiro de homologação do equipamento: [TESTE_MAC_WINDOWS.md](TESTE_MAC_WINDOWS.md). Não há pacote MyUbbe publicado nem teste de conexão MacBook → Windows 11 concluído.
+- Roteiro de homologação do equipamento: [TESTE_MAC_WINDOWS.md](TESTE_MAC_WINDOWS.md). Naquela consulta ainda não havia pacote MyUbbe publicado; o teste de conexão MacBook → Windows 11 continua pendente.
 
 Compilação/testes nativos locais dependem de SDKs Rust/Flutter e ferramentas C++/LLVM/vcpkg, ausentes do PATH e dos locais padrão conferidos. Python 3.14, Pillow 12.2 e PyYAML 6 estão disponíveis fora do PATH. Build macOS é executado nos runners Mac do GitHub; não foi inspecionado no MacBook do titular.
 
