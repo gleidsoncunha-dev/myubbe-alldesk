@@ -81,8 +81,19 @@ A integridade do clone e do submódulo foi verificada com
 dependem dos SDKs e das ferramentas C++/LLVM/vcpkg, ausentes no PATH e nos locais
 padrão conferidos. Python 3.14 com Pillow 12.2 está disponível fora do PATH.
 
-CI e publicação: pendentes de acompanhamento após o push da branch
-`feat/myubbe-branding`. Não foram criadas tags nem releases antes do build.
+Branch publicada: `feat/myubbe-branding`, commit inicial `d7b8cf608`.
+PR em rascunho: https://github.com/gleidsoncunha-dev/myubbe-alldesk/pull/1.
+O conector GitHub retornou 403 no fork novo; commit, push e PR foram feitos
+pela CLI já autenticada. GitHub Actions foi ativado no fork.
+
+O primeiro Full Flutter CI encerrou com `startup_failure`: o workflow reutilizado
+exige `contents: write` em jobs de metadados, mas o chamador herdava somente
+`contents: read`. O job chamador em `flutter-ci.yml` recebeu explicitamente a
+permissão necessária; `upload-artifact: false` permanece. Isso corrige o bloqueio
+de validação da configuração herdada, sem mudar o padrão global de permissões do
+fork nem habilitar publicação pelo CI. Reexecução pendente.
+
+Não foram criadas tags nem releases antes do build.
 
 Não há binário MyUbbe compilado ou homologação visual/autenticada nesta etapa.
 Não declarar um instalador publicado antes da conclusão do build e da release.
