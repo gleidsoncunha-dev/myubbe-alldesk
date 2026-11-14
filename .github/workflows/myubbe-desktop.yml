@@ -70,10 +70,15 @@ jobs:
           missing = expected - {asset['name'] for asset in release['assets']}
           assert not missing, f'Missing release assets: {sorted(missing)}'
           assert release['isDraft'], 'Expected a draft release'
-          notes = f'''Primeira versão de teste do MyUbbe AllDesk, baseada no RustDesk 1.5.3.
+          config_path = Path('myubbe-alldesk-server-config.txt')
+          config_path.write_bytes(subprocess.check_output(['python', 'scripts/export_server_config.py']))
+          subprocess.run(['gh', 'release', 'upload', tag, str(config_path), 'deploy/client-config.json'], check=True)
+          notes = f'''MyUbbe AllDesk {version}, baseado no RustDesk 1.5.3.
 
           - Identidade MyUbbe nos clientes Windows x64/ARM64 e Mac Intel/Apple Silicon.
           - EXE portátil e MSI para Windows; DMG para Mac.
+          - Servidor MyUbbe próprio e chave pública definidos por padrão; configurações manuais existentes são preservadas.
+          - Para clientes anteriores: importar myubbe-alldesk-server-config.txt em Configurações → Rede.
           - Windows sem assinatura comercial; Mac com assinatura ad hoc, sem notarização.
           - Compilação e metadados conferidos em CI. Teste de uma sessão real Mac → Windows ainda pendente.
 

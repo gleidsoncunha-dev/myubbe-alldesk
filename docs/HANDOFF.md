@@ -1,5 +1,45 @@
 # MyUbbe AllDesk — handoff
 
+## Servidor próprio — 14/11/2026 — lote 1.5.5 em preparação
+
+Autorização nesta conversa: implementar tudo necessário para funcionar no VPS
+do CRM. Endereço confirmado `195.182.200.177`; acesso pelo alias SSH existente.
+Inventário inicial: 15.993 MiB totais, 11.876 MiB disponíveis, 163 GiB livres;
+portas 21115–21119 desocupadas. CRM 1.98.31 saudável no domínio principal.
+
+Nova infraestrutura independente em `/opt/myubbe-alldesk`: RustDesk Server OSS
+1.1.16 fixado por digest, dados/chaves privados persistentes, limites e rotação
+de logs. Apenas portas nativas publicadas. Chave gerada em contêiner sem rede,
+antes da publicação; somente a pública é versionada. O DNS `vps.myubbe.com.br`
+não existe publicamente; o cliente usa o IP confirmado. Nenhuma alteração DNS
+ou proxy é necessária.
+
+Cliente incrementado para 1.5.5 / Flutter 1.5.5+73, com lockfiles e metadados
+sincronizados. Defaults de rede no módulo `branding.rs`, preservando opções
+manuais e overrides assinados. Sem alteração em submódulos, protocolo, captura,
+autenticação, senhas, permissões ou consentimento. Teste desktop compara o
+perfil público de distribuição com as constantes e valida a chave de 32 bytes.
+Scripts exportam o perfil no formato herdado, configuram clientes parados com
+backup e publicam o servidor versionado. Documentação em `deploy/vps/README.md`.
+
+Validação local aprovada: `git diff --check`, AST Python, YAML/TOML, versões
+sincronizadas, formato de importação com ida/volta e chave pública de 32 bytes;
+3/3 testes do configurador; parser PowerShell sem erros; actionlint 1.7.12 do
+workflow de release; Compose validado pelo Docker real do VPS. Build/testes
+nativos permanecem nos runners Windows/Mac. Novo workflow verifica Compose,
+sintaxe Bash e testes do configurador em Linux.
+
+Commit, CI, publicação e registro real: **em andamento**, ainda não
+declarados concluídos. Controle nativo do Windows indisponível: pipe não
+encontrado (erro 2). O conector do Mac falhou com erro interno ao listar
+projetos; abertura e teste de tela no Mac não estão comprovados por ferramentas.
+
+Superfície de regressão: em runtime existente, somente `src/branding.rs` passa
+a oferecer defaults de servidor aos clientes Windows/macOS. Workflow desktop
+passa a publicar também o perfil importável e notas sobre o servidor; demais
+arquivos existentes alterados são versão/metadados e documentação. Serviços e
+dados do CRM não são alterados.
+
 ## Escopo autorizado
 
 - Data: 14/11/2026, America/Sao_Paulo.

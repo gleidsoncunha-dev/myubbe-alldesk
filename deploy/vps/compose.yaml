@@ -1,0 +1,38 @@
+name: myubbe-alldesk
+
+x-server: &server
+  image: rustdesk/rustdesk-server:1.1.16@sha256:8ecdab65deb7c84652a626380e31d11a8f1fbafd97916d57f95c20628f943c00
+  restart: unless-stopped
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  mem_limit: 256m
+  cpus: 1
+  pids_limit: 128
+  volumes:
+    - /opt/myubbe-alldesk/shared/data:/root
+  logging:
+    driver: json-file
+    options:
+      max-size: 10m
+      max-file: '3'
+  labels:
+    com.myubbe.product: MyUbbeAllDesk
+    com.myubbe.version: '1.5.5'
+
+services:
+  hbbr:
+    <<: *server
+    command: [hbbr, -k, _]
+    ports:
+      - '21117:21117/tcp'
+  hbbs:
+    <<: *server
+    command: [hbbs, -r, '195.182.200.177:21117', -k, _]
+    ports:
+      - '21115:21115/tcp'
+      - '21116:21116/tcp'
+      - '21116:21116/udp'
+    depends_on:
+      hbbr:
+        condition: service_started

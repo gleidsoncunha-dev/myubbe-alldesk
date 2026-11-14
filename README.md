@@ -7,9 +7,10 @@ O cenário inicial é acessar o Windows pelo MacBook.
 O alvo do cliente Intel é macOS Monterey 12.0 ou posterior; Apple Silicon usa
 12.3 ou posterior. O ambiente informado pelo titular é Monterey 12.7.6 em Intel.
 
-Versão do fork: **1.5.4** (base RustDesk 1.5.3). Veja
+Versão do fork: **1.5.5** (base RustDesk 1.5.3). Veja
 [o handoff](docs/HANDOFF.md) para validação, limitações e publicação.
-Pacotes de teste publicados na [release 1.5.4](https://github.com/gleidsoncunha-dev/myubbe-alldesk/releases/tag/myubbe-v1.5.4).
+Servidor próprio e configuração dos clientes: [operação no VPS](deploy/vps/README.md).
+O handoff distingue os pacotes publicados e as validações de cada versão.
 O [roteiro Mac → Windows](docs/TESTE_MAC_WINDOWS.md) descreve o primeiro teste nos equipamentos.
 O código original e esta distribuição permanecem sob a [AGPL-3.0](LICENCE).
 
