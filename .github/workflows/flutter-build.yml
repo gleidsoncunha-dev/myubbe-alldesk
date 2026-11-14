@@ -15,6 +15,9 @@ on:
       desktop-only:
         type: boolean
         default: false
+      draft-release:
+        type: boolean
+        default: false
 
 # NOTE: F-Droid builder script 'flutter/build_fdroid.sh' reads environment
 # variables from this workflow!
@@ -130,6 +133,7 @@ jobs:
           tag_name: ${{ env.TAG_NAME }}
           files: |
             rustdesk.sbom.json
+          draft: ${{ inputs.draft-release }}
 
   generate-bridge:
     needs: [validate-update-metadata-keys]
@@ -586,6 +590,7 @@ jobs:
           files: |
             ./SignOutput/myubbe-alldesk-*.msi
             ./SignOutput/myubbe-alldesk-*.exe
+          draft: ${{ inputs.draft-release }}
 
   # The fallback for the flutter version, we use Sciter for 32bit Windows.
   build-for-windows-sciter:
@@ -1226,6 +1231,7 @@ jobs:
           tag_name: ${{ env.TAG_NAME }}
           files: |
             myubbe-alldesk*-${{ matrix.job.arch }}.dmg
+          draft: ${{ inputs.draft-release }}
 
   publish-signed-update-metadata:
     needs: [build-for-windows-flutter, build-for-windows-sciter, build-for-macOS]
