@@ -1,3 +1,17 @@
+# MyUbbe AllDesk
+
+Personalização do RustDesk para MyUbbe, com identidade visual reutilizada do
+MyUbbe CRM. A primeira etapa contempla Windows 11 e macOS, com nome nativo,
+identidade dos pacotes, ícones e logotipos claro e escuro da interface Flutter.
+O cenário inicial é acessar o Windows pelo MacBook.
+O alvo do cliente Intel é macOS Monterey 12.0 ou posterior; Apple Silicon usa
+12.3 ou posterior. O ambiente informado pelo titular é Monterey 12.7.6 em Intel.
+
+Versão do fork: **1.5.4** (base RustDesk 1.5.3). Veja
+[o handoff](docs/HANDOFF.md) para validação, limitações e publicação.
+O [roteiro Mac → Windows](docs/TESTE_MAC_WINDOWS.md) descreve o primeiro teste nos equipamentos.
+O código original e esta distribuição permanecem sob a [AGPL-3.0](LICENCE).
+
 <p align="center">
   <img src="res/logo-header.svg" alt="RustDesk - Your remote desktop"><br>
   <a href="#raw-steps-to-build">Build</a> •

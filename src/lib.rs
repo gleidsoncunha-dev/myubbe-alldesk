@@ -49,6 +49,8 @@ mod clipboard;
 #[cfg(not(any(target_os = "android", target_os = "ios")))]
 pub mod core_main;
 mod custom_server;
+#[cfg(any(target_os = "windows", target_os = "macos"))]
+mod branding;
 mod lang;
 #[cfg(not(any(target_os = "android", target_os = "ios")))]
 mod port_forward;
