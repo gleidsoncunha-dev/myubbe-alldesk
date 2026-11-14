@@ -1,6 +1,6 @@
 # MyUbbe AllDesk — handoff
 
-## Servidor próprio — 14/11/2026 — lote 1.5.5 em preparação
+## Servidor próprio — 14/11/2026 — lote 1.5.5
 
 Autorização nesta conversa: implementar tudo necessário para funcionar no VPS
 do CRM. Endereço confirmado `195.182.200.177`; acesso pelo alias SSH existente.
@@ -46,6 +46,20 @@ a oferecer defaults de servidor aos clientes Windows/macOS. Workflow desktop
 passa a publicar também o perfil importável e notas sobre o servidor; demais
 arquivos existentes alterados são versão/metadados e documentação. Serviços e
 dados do CRM não são alterados.
+
+**Publicação VPS concluída:** `d3075efce`, às 18:21 BRT, marker
+`PUBLICACAO_VERIFICADA MyUbbeAllDesk 1.5.5`. Sondas externas passaram em TCP,
+UDP, NAT e relay bidirecional com payload sintético; chave incorreta rejeitada.
+Cliente Windows 1.5.4 configurado com backup e reiniciado sem sessão TCP ativa;
+registro real confirmado no servidor e no `keys_confirmed` local. Serviços
+estáveis, zero reinícios, política de boot e permissões verificadas. CRM
+1.98.31 continua healthy. [Evidências e limites](VALIDACAO_VPS_1.5.5.md).
+
+CI servidor final `43642359914`: **success**. CI Linux `43642359812`, desktop
+`43642359975` e release `43642253910`: em andamento. Execuções Linux/desktop
+anteriores do commit `eb095db8f` canceladas por terem sido substituídas pelas
+do commit de correção; não se declaram aprovadas nem substituem as atuais.
+Release de instaladores continua em execução na tag original, sem retag.
 
 ## Escopo autorizado
 
