@@ -5,10 +5,12 @@ Este roteiro descreve uma validação manual; sua execução ainda está pendent
 
 ## Arquivos
 
+Release de teste [1.5.4 publicada](https://github.com/gleidsoncunha-dev/myubbe-alldesk/releases/tag/myubbe-v1.5.4), com CI e empacotamento aprovados.
+
 | Computador | Arquivo da release MyUbbe |
 | --- | --- |
-| Windows 11 x64 | `myubbe-alldesk-<versão>-x86_64.exe` para o primeiro teste portátil |
-| Mac Intel | `myubbe-alldesk-<versão>-x86_64.dmg` |
+| Windows 11 x64 | [myubbe-alldesk-1.5.4-x86_64.exe](https://github.com/gleidsoncunha-dev/myubbe-alldesk/releases/download/myubbe-v1.5.4/myubbe-alldesk-1.5.4-x86_64.exe), primeiro teste portátil |
+| Mac Intel | [myubbe-alldesk-1.5.4-x86_64.dmg](https://github.com/gleidsoncunha-dev/myubbe-alldesk/releases/download/myubbe-v1.5.4/myubbe-alldesk-1.5.4-x86_64.dmg) |
 
 Os arquivos `aarch64` correspondem a outra arquitetura. A release deve estar
 publicada, com o build completo aprovado, antes de iniciar este roteiro.

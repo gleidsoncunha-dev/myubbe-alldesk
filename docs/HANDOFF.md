@@ -56,7 +56,7 @@ Captura, protocolo, permissões, consentimento, autenticação, criptografia e t
 ## Validação e estado
 
 - Local: `git diff --check`; leitura de TOML e versões; PNGs comparados byte a byte com o CRM; PNG/ICO/ICNS decodificados; sintaxe Python, YAML/depends e plist validados. Imagens originais e logotipo claro inspecionados.
-- `actionlint 1.7.12`, obtido da release oficial com SHA256 conferido: workflows chamadores desktop/release sem achados. O workflow reutilizado contém dois achados herdados em Android universal (`matrix.job.arch` sem matriz) e Web (`if: False`); confirmados no upstream e preservados fora do escopo desktop.
+- `actionlint 1.7.12`, obtido da release oficial com SHA256 conferido: workflows chamadores desktop/release e os quatro workflows herdados com restrição de repositório sem achados. O workflow reutilizado contém dois achados herdados em Android universal (`matrix.job.arch` sem matriz) e Web (`if: False`); confirmados no upstream e preservados fora do escopo desktop.
 
 ### Resultado aprovado — commit 2361f1cc1
 
@@ -66,7 +66,7 @@ Captura, protocolo, permissões, consentimento, autenticação, criptografia e t
 - [PR 1](https://github.com/gleidsoncunha-dev/myubbe-alldesk/pull/1) integrada em `a4f565a8e53fb9e7f9faa50a8c6e0d4f6736002d`, após todos os checks terminarem. Conferido o head exato no merge, sem override administrativo. Branch sem checks obrigatórios adicionais configurados na consulta; nenhum check foi ignorado.
 - `master` local acompanha `origin/master`. Histórico preservado, push e merge sem force.
 - Inspeção de logs por navegador indisponível: host do navegador e canal nativo de apps não disponíveis nesta sessão. Acompanhamento por CLI/API; nenhuma homologação visual/autenticada do produto foi realizada.
-- Publicação dos instaladores: **pendente**, próxima etapa. O código está integrado; ainda não há release MyUbbe publicada.
+- Publicação dos instaladores: **concluída**, como pré-release de teste 1.5.4. Evidências e limites abaixo.
 
 ### Histórico das rodadas anteriores
 
@@ -82,10 +82,29 @@ Captura, protocolo, permissões, consentimento, autenticação, criptografia e t
 
 Compilação/testes nativos locais dependem de SDKs Rust/Flutter e ferramentas C++/LLVM/vcpkg, ausentes do PATH e dos locais padrão conferidos. Python 3.14, Pillow 12.2 e PyYAML 6 estão disponíveis fora do PATH. Build macOS é executado nos runners Mac do GitHub; não foi inspecionado no MacBook do titular.
 
+## Publicação concluída e smoke dos arquivos
+
+- [Release MyUbbe AllDesk 1.5.4](https://github.com/gleidsoncunha-dev/myubbe-alldesk/releases/tag/myubbe-v1.5.4), publicada em **14/11/2026 às 14:14:40, America/Sao_Paulo**. API confirma `draft: false`, `prerelease: true`, seis pacotes desktop e SBOM. Tag `myubbe-v1.5.4` aponta para `9165acdcec5ba9b2483a6657980d5a99f0e90dc9`; não foi retaggeada.
+- [Workflow de publicação](https://github.com/gleidsoncunha-dev/myubbe-alldesk/actions/runs/43614754750): **success**. Windows x64/ARM64 passaram verificação de versão/produto e geração de MSI; Mac Intel/ARM64 passaram verificação do bundle, assinatura ad hoc com verificação e geração de DMG. O job final só promoveu o rascunho depois dos sete arquivos esperados.
+- CI após o merge também terminou **success**: [Linux](https://github.com/gleidsoncunha-dev/myubbe-alldesk/actions/runs/43614526958) e [desktop](https://github.com/gleidsoncunha-dev/myubbe-alldesk/actions/runs/43614527076). Os ajustes posteriores de automação não alteraram o aplicativo e passaram em actionlint.
+- Os quatro workflows herdados foram também desativados via API no próprio fork, com estado `disabled_manually`: nightly, tag, F-Droid e update-webpki-roots. CI, build reutilizado e release MyUbbe permanecem ativos.
+- Destino público conferido por página da release e API; links diretos de Mac Intel DMG e Windows x64 EXE responderam HTTP 200 sem autenticação.
+- Smoke local somente de leitura dos arquivos Windows baixados: tamanhos e SHA256 coincidem com os digests da API da release; cabeçalho PE x64; produto `MyUbbe AllDesk`, versão `1.5.4`; Authenticode `NotSigned`, conforme o perfil de desenvolvimento. Ícone extraído do EXE publicado inspecionado e confirmado como MyUbbe.
+- MSI aberto com Windows Installer em modo 0 (leitura), sem instalar: `ProductName=MyUbbeAllDesk`, `Manufacturer=MyUbbe`, `ProductVersion=1.5.4.29911267`, `UpgradeCode={2D68606F-3A5E-57AB-BFC4-299DE98249AE}`. O sufixo MSI é a revisão automática do gerador herdado; a versão base permanece 1.5.4. O UpgradeCode difere do RustDesk original.
+
+| Arquivo Windows x64 | SHA256 conferido no download |
+| --- | --- |
+| EXE | `eece2d8c79ab55b4ce4591cc2e516c8e50b213d9b98a2f92a749ec3d444259cb` |
+| MSI | `184250d31876abdcadadfda7523d8100b4f75abcee3e4c1b540b197f716e1189` |
+
+Esse smoke não executou o aplicativo nem instalou serviço. Abertura no Monterey físico, inspeção completa da interface e sessão real Mac → Windows continuam **pendentes**; seguir [TESTE_MAC_WINDOWS.md](TESTE_MAC_WINDOWS.md). Windows não tem assinatura comercial; Mac tem assinatura ad hoc, sem notarização. Servidor próprio e canal de atualização seguem fora desta primeira distribuição de teste.
+
+O commit documental de fechamento mantém 1.5.4, pois registra o mesmo lote já versionado/publicado; não muda código nem artefatos da tag.
+
 ## Licença e continuação
 
 Preservados `LICENCE`, autoria e copyright do RustDesk. Código sob AGPL-3.0; distribuição comercial deve cumprir as obrigações aplicáveis, inclusive fornecimento do código correspondente. Ativos MyUbbe reutilizados por autorização do titular, sem presumir que tenham a mesma licença do código. Não foram incluídos segredos, certificados ou configurações de produção do CRM.
 
 Fontes: https://github.com/rustdesk/rustdesk/blob/master/LICENCE e https://rustdesk.com/docs/en/dev/build/windows/.
 
-Depois do build: inspecionar os pacotes e a interface Windows; validar abertura/permissões no MacBook; testar a conexão real Mac → Windows; definir infraestrutura própria e assinatura comercial antes de distribuição a clientes.
+Próxima etapa: abrir os clientes publicados nos equipamentos, conferir a interface Windows, validar abertura/permissões no MacBook e testar uma sessão real Mac → Windows. Infraestrutura própria e assinatura comercial ficam para a preparação de distribuição a clientes.
