@@ -58,8 +58,10 @@ estáveis, zero reinícios, política de boot e permissões verificadas. CRM
 CI servidor final `43642359914`: **success**. CI Linux `43642359812`:
 **success**, build e testes workspace (212 testes no aplicativo, além das
 outras crates). Release `43642253910`: em andamento. CI desktop `43642359975`
-cancelada por duplicar o mesmo workflow nativo executado integralmente pela
-release; não se declara essa execução aprovada. Execuções Linux/desktop
+foi cancelada sob a suposição incorreta de duplicação integral e depois
+**reativada**: a inspeção dos `if` mostrou que a release omite os testes
+Rust/Dart quando `upload-artifact=true`. Aguardar a CI desktop específica para
+esses testes; não se declara a tentativa cancelada aprovada. Execuções Linux/desktop
 anteriores do commit `eb095db8f` canceladas por terem sido substituídas pelas
 do commit de correção; não se declaram aprovadas nem substituem as atuais.
 Release de instaladores continua em execução na tag original, sem retag.
