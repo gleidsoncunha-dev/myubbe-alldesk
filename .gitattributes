@@ -1,1 +1,2 @@
 * text=auto
+/deploy/vps/*.sh text eol=lf

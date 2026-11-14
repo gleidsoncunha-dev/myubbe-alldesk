@@ -10,7 +10,7 @@ $sha = (git -C $root rev-parse HEAD).Trim()
 $archive = Join-Path ([IO.Path]::GetTempPath()) "myubbe-alldesk-$version-$sha.tar"
 $destination = "/opt/myubbe-alldesk/releases/$version"
 try {
-    git -C $root archive --format=tar --output=$archive HEAD Cargo.toml deploy scripts
+    git -c core.autocrlf=false -C $root archive --format=tar --output=$archive HEAD Cargo.toml deploy scripts
     if ($LASTEXITCODE -ne 0) { throw 'Falha ao gerar arquivo versionado' }
     ssh -o BatchMode=yes $SshHost "install -d -m 755 $destination; test ! -f $destination/COMMIT || test `"`$(cat $destination/COMMIT)`" = '$sha'"
     if ($LASTEXITCODE -ne 0) { throw 'Destino ja contem outro commit' }

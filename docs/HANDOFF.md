@@ -34,6 +34,13 @@ declarados concluídos. Controle nativo do Windows indisponível: pipe não
 encontrado (erro 2). O conector do Mac falhou com erro interno ao listar
 projetos; abertura e teste de tela no Mac não estão comprovados por ferramentas.
 
+CI de configuração do servidor `43642250910`: **success**. Primeira tentativa
+de deploy interrompida antes de iniciar serviços: `git archive` com autocrlf
+herdado do Windows exportou Bash em CRLF. Wrapper corrigido para exportar com
+`core.autocrlf=false` e regra LF explícita para os scripts do deploy. Correção
+do mesmo lote ainda não publicado no VPS, mantendo 1.5.5. Tag dos clientes
+continua apontando para `eb095db8f`; não houve retag nem alteração dos defaults.
+
 Superfície de regressão: em runtime existente, somente `src/branding.rs` passa
 a oferecer defaults de servidor aos clientes Windows/macOS. Workflow desktop
 passa a publicar também o perfil importável e notas sobre o servidor; demais
