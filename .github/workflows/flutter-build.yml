@@ -44,7 +44,7 @@ env:
   FLUTTER_WINDOWS_ARM_VERSION: "3.44.9"
   # macOS arm64 only: 3.24.5's engine crashes in attributedSubstringForProposedRange
   # (https://github.com/rustdesk/rustdesk/issues/16817, https://github.com/flutter/flutter/issues/153157).
-  # x86_64 stays on FLUTTER_VERSION: 3.44's FlutterMacOS needs macOS 10.15 there, and it targets 10.14.
+  # x86_64 keeps the older engine; both Mac builds target Monterey.
   FLUTTER_MACOS_ARM_VERSION: "3.44.9"
   # for arm64 linux because official Dart SDK does not work
   FLUTTER_ELINUX_VERSION: "3.16.9"
@@ -932,6 +932,8 @@ jobs:
     name: ${{ matrix.job.target }}
     runs-on: ${{ matrix.job.os }}
     needs: [generate-bridge]
+    env:
+      MACOSX_DEPLOYMENT_TARGET: ${{ matrix.job.arch == 'aarch64' && '12.3' || '12.0' }}
     strategy:
       fail-fast: false
       matrix:
@@ -1119,11 +1121,9 @@ jobs:
         run: |
           if [ "${{ matrix.job.target }}" = "aarch64-apple-darwin" ]; then
             MIN_MACOS_VERSION="12.3"
-            sed -i -e "s/MACOSX_DEPLOYMENT_TARGET\=[0-9]*.[0-9]*/MACOSX_DEPLOYMENT_TARGET=${MIN_MACOS_VERSION}/" build.py
             sed -i -e "s/platform :osx, '.*'/platform :osx, '${MIN_MACOS_VERSION}'/" flutter/macos/Podfile
             sed -i -e "s/osx_minimum_system_version = \"[0-9]*.[0-9]*\"/osx_minimum_system_version = \"${MIN_MACOS_VERSION}\"/" Cargo.toml
             sed -i -e "s/MACOSX_DEPLOYMENT_TARGET = [0-9]*.[0-9]*;/MACOSX_DEPLOYMENT_TARGET = ${MIN_MACOS_VERSION};/" flutter/macos/Runner.xcodeproj/project.pbxproj
-            echo "MACOSX_DEPLOYMENT_TARGET=${MIN_MACOS_VERSION}" >> "$GITHUB_ENV"
           fi
           ./build.py --flutter --hwcodec --unix-file-copy-paste ${{ matrix.job.extra-build-args }}
 
@@ -1151,6 +1151,7 @@ jobs:
           test "$("$APP/Contents/MacOS/MyUbbeAllDesk" --version)" = "$VERSION"
           test "$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$APP/Contents/Info.plist")" = "com.myubbe.alldesk"
           test "$(/usr/libexec/PlistBuddy -c 'Print CFBundleName' "$APP/Contents/Info.plist")" = "MyUbbeAllDesk"
+          python3 scripts/check_macos_compatibility.py "$APP" --architecture "${{ matrix.job.arch }}" --maximum-macos 12.7.6
 
       - name: Sign development macOS bundle
         if: ${{ inputs.upload-artifact && env.MACOS_P12_BASE64 == '' }}

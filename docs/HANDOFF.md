@@ -4,6 +4,7 @@
 
 - Data: 14/11/2026, America/Sao_Paulo.
 - Produto: **MyUbbe AllDesk**. Marca nos clientes **Windows e Mac**, conforme confirmação do titular. Cenário inicial: MacBook acessando Windows 11.
+- Ambiente confirmado: Windows x64 e MacBook Air Intel com macOS Monterey **12.7.6**. O arquivo do Mac desse ambiente é `x86_64`.
 - Base: https://github.com/rustdesk/rustdesk, commit `a89a82f911d9e1bfe742e79ccb2aeaaa3c950d20` (RustDesk 1.5.3).
 - Fork: https://github.com/gleidsoncunha-dev/myubbe-alldesk.
 - Pasta: `C:\PROJETOS\myubbe-alldesk`. `origin` é o fork; `upstream` é RustDesk.
@@ -42,6 +43,8 @@ Não foi usada a arte com o sufixo CRM nem redesenhado o símbolo. Os logotipos 
 - Publicação em duas etapas: todos os arquivos são enviados a um rascunho (`draft-release: true`); somente após o sucesso do build completo e a presença dos quatro pacotes Windows, dois DMGs e SBOM, um job final publica a pré-release. A opção de rascunho é desativada por padrão no workflow reutilizado, preservando os demais chamadores.
 - CI desktop continua compilando e testando Windows/macOS. CI Linux básico é mantido. Nenhum check obrigatório foi removido nem ignorado para merge.
 - Smoke de release: versão e metadados do EXE e versão/nome/bundle ID do aplicativo Mac. Sem certificados, Mac recebe assinatura ad hoc de desenvolvimento e Windows fica sem assinatura Authenticode. Isso não equivale a assinatura comercial/notarização Apple.
+- Compatibilidade Monterey: mínimo 12.0 no Intel e 12.3 no Apple Silicon, alinhando Xcode, CocoaPods, Rust, ambiente do job e triplets vcpkg de codecs. A compilação em um runner novo não é, por si, prova de execução em Monterey.
+- `scripts/check_macos_compatibility.py` verifica arquitetura e mínimos declarados nos Mach-O do bundle com `lipo`/`vtool`, além do mínimo do Info.plist, contra 12.7.6. Registra binários sem mínimo explícito; não substitui abertura e teste no MacBook real.
 
 ### Superfície de regressão
 
@@ -58,6 +61,7 @@ Captura, protocolo, permissões, consentimento, autenticação, criptografia e t
 - Bloqueio inicial do Flutter CI (`contents: write` requerido pelo workflow reutilizado) foi corrigido no job chamador, preservando o padrão global de permissões somente leitura. Repositório sem proteção de branch/checks obrigatórios configurados na consulta inicial.
 - Commit/push iniciais: `d7b8cf608`, `568e084a2` e `d768cb89c`; PR em rascunho: https://github.com/gleidsoncunha-dev/myubbe-alldesk/pull/1.
 - A revisão dos overrides Xcode encontrou bundle ID antigo nos três perfis do target; todos foram alinhados antes da publicação. A correção recebe nova rodada de CI, pois AppInfo.xcconfig sozinho não prevalecia sobre essas configurações.
+- CI `52934ae83`: Windows x64, Windows ARM64 e Mac Apple Silicon passaram. Mac Intel e Linux perderam comunicação com os runners; foram reexecutados isoladamente. O alvo Monterey foi informado depois dessa rodada e exige validação da configuração explícita de deployment target.
 - O conector GitHub retornou 403 no fork novo; a CLI já autenticada foi utilizada. GitHub Actions foi ativado no fork.
 - Próxima rodada: validar o lote Windows + Mac completo antes de merge e release. Não há pacote MyUbbe publicado nem teste de conexão MacBook → Windows 11 concluído.
 

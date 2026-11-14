@@ -932,10 +932,12 @@ def build_deb_from_folder(version, binary_folder, want_drm=False):
 
 
 def build_flutter_dmg(version, features):
+    os.environ.setdefault(
+        'MACOSX_DEPLOYMENT_TARGET',
+        '12.3' if 'screencapturekit' in features.split(',') else '12.0')
     if not skip_cargo:
-        # set minimum osx build target, now is 10.14, which is the same as the flutter xcode project
         system2(
-            f'MACOSX_DEPLOYMENT_TARGET=10.14 cargo build --locked --features {features} --release')
+            f'cargo build --locked --features {features} --release')
     # copy dylib
     system2(
         "cp target/release/liblibrustdesk.dylib target/release/librustdesk.dylib")
@@ -944,6 +946,7 @@ def build_flutter_dmg(version, features):
     # so the universal-by-default ARCHS_STANDARD doesn't try to link a missing slice.
     # FLUTTER_XCODE_* env vars are forwarded to xcodebuild as build settings.
     mac_arch = 'arm64' if platform.machine().lower() in ('arm64', 'aarch64') else 'x86_64'
+    os.environ['FLUTTER_XCODE_MACOSX_DEPLOYMENT_TARGET'] = os.environ['MACOSX_DEPLOYMENT_TARGET']
     system2(
         f'FLUTTER_XCODE_ARCHS={mac_arch} FLUTTER_XCODE_ONLY_ACTIVE_ARCH=YES flutter build macos --release')
     system2('cp -rf ../target/release/service ./build/macos/Build/Products/Release/MyUbbeAllDesk.app/Contents/MacOS/')
