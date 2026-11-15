@@ -44,9 +44,38 @@ Revisão de minimização realizada. Superfície existente alterada:
 - Workflows: versão, nome do SBOM e notas da release; nenhum gate removido.
 - Manifestos, locks e arquivos de pacote: somente incremento de versão.
 
-Commit/push, CI e publicação desktop: **em preparação**. A inspeção visual desta
-versão e nova sessão nos equipamentos ainda não foram realizadas. Os resultados
-serão registrados abaixo antes do fechamento da entrega.
+### Validação aprovada e merge
+
+- Código final: `32c781276d17d4cff1eb064e375d42966034ba3b`, com commit/push sem
+  force. Auditoria estática de 54 tabelas e 1.388 valores com a marca; campos de
+  substituição preservados e URLs técnicas reais mantidas.
+- [CI Linux 43670953715](https://github.com/gleidsoncunha-dev/myubbe-alldesk/actions/runs/43670953715):
+  **success**, build e testes workspace; 215 testes do aplicativo aprovados.
+- [CI desktop 43670953904](https://github.com/gleidsoncunha-dev/myubbe-alldesk/actions/runs/43670953904):
+  **success**, Windows x64/ARM64 e Mac Intel/Apple Silicon. Windows x64:
+  261 testes do aplicativo e 2 de clipboard; Mac ARM64: 263 e 22. Os três
+  testes novos de marca passaram em Linux, Windows x64 e Mac ARM64. Dart
+  passou nos dois Macs; os dois bundles passaram no gate de versão/identidade.
+  O workflow existente omite Rust tests em Windows ARM64 e Mac Intel.
+- [PR 2](https://github.com/gleidsoncunha-dev/myubbe-alldesk/pull/2) integrada em
+  `e103978d78e03d04ccd6ff17172d2f81ec8cc71c`, com conferência do head exato e
+  todos os checks da PR concluídos. Sem override administrativo ou force.
+  Consulta imediatamente anterior: branch sem proteção e nenhum ruleset ativo.
+- Prova de equivalência do merge: árvore Git
+  `324a2e73cbd51c01519483be21c8433db419494f`, idêntica no head testado e no
+  merge. CI Linux/desktop não têm condições dependentes do evento push/PR.
+  Execuções automáticas duplicadas pós-merge `43677117071`/`43677117054`
+  canceladas somente após essa conferência; **não são declaradas aprovadas**.
+  A evidência dos testes completos é a CI da PR, não o build de release:
+  `upload-artifact=true` continua omitindo Rust/Dart nesse fluxo de publicação.
+- Execuções iniciais `43670801064`/`43670801230` do código anterior
+  `2f7f689dd` foram canceladas por substituição pelo head corrigido. Não
+  contam como aprovadas.
+
+Publicação desktop: **a iniciar**. A inspeção visual desta versão e uma nova
+sessão nos equipamentos ainda não foram realizadas. Não foi instalado ou
+reiniciado o cliente local. Este commit documental registra o mesmo lote já
+versionado; mantém 1.5.6.
 
 ## Servidor próprio — 14/11/2026 — lote 1.5.5
 
