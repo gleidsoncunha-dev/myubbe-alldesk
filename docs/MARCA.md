@@ -7,6 +7,8 @@ traduzidos, ao título fixo da janela, ao rodapé e aos links principais.
 As chaves de tradução e as tabelas originais são preservadas: a substituição
 ocorre depois da tradução, inclusive nas mensagens de servidor e no rodapé.
 Isso mantém os idiomas, as variáveis e a compatibilidade das chamadas.
+As variantes de grafia encontradas nos textos italiano e tâmil também são
+convertidas, preservando os domínios reais dos links de documentação técnica.
 
 Referências técnicas que continuam contendo o nome original:
 

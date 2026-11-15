@@ -319,6 +319,7 @@ fn display_brand(text: &str) -> String {
     text.replace("MyUbbeAllDesk", "AllDesk")
         .replace("RustDesk", "AllDesk")
         .replace("Rustdesk", "AllDesk")
+        .replace("rustdesk_", "AllDesk_")
 }
 
 // Matching pattern is {}
@@ -512,6 +513,9 @@ mod test {
         );
         let url = "https://rustdesk.com/docs/en/client/mac/#enable-permissions";
         assert_eq!(super::display_brand(url), url);
+        let tamil = super::translate_locale("verify_rustdesk_password_tip".to_owned(), "ta");
+        assert!(tamil.contains("AllDesk"));
+        assert!(!tamil.contains("rustdesk"));
     }
 
     #[test]
