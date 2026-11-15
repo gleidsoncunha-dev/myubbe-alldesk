@@ -1,5 +1,53 @@
 # MyUbbe AllDesk — handoff
 
+## Marca AllDesk — lote 1.5.6
+
+Pedido do titular: substituir os nomes RustDesk por AllDesk no projeto.
+Versão do cliente incrementada para **1.5.6**, Flutter **1.5.6+74**, com
+manifestos, lockfiles, workflow e metadados de empacotamento sincronizados.
+O servidor publicado permanece no lote 1.5.5: este pedido altera a marca do
+cliente e não requer reiniciar ou republicar a infraestrutura de rede.
+
+Implementado: marca aplicada depois da tradução, cobrindo títulos, permissões,
+mensagens, rodapé e as exceções herdadas de servidor; título fixo Flutter;
+links de site/download/suporte do próprio fork; licença real na instalação;
+informações de conexões e privacidade próprias; título da caixa Windows;
+emissor do QR 2FA; módulo Swift e suas duas referências XIB; nome do SBOM.
+Rótulos Android/iOS/Linux ajustados nas fontes, sem ampliar os alvos publicados.
+README passa a apresentar o AllDesk e seus downloads, removendo a divulgação
+herdada de outra distribuição. [Decisões e exceções técnicas](MARCA.md).
+
+Não foram alterados os identificadores de executável/serviço/configuração
+MyUbbeAllDesk nem os canais, símbolos FFI, dependências ou protocolos. Licenças,
+autoria e copyright originais foram preservados. A mudança de emissor 2FA
+somente altera a identificação no autenticador; o teste novo compara o código
+com o emissor anterior usando o mesmo segredo e instante.
+
+Validação local: `git diff --check`; actionlint 1.7.12 dos workflows de CI
+desktop e publicação; YAML de todos os workflows; TOML e versões dos lockfiles;
+XML Android/iOS/XIB, correspondência módulo Swift/XIB; AST Python; 3/3 testes do
+configurador de cliente. Licença raiz e RTF do MSI comparadas com HEAD, sem
+alteração. Rust/Flutter e SDKs nativos indisponíveis localmente: os três testes
+Rust de marca, os builds e os testes desktop/Linux dependem do CI.
+
+Revisão de minimização realizada. Superfície existente alterada:
+
+- `src/lang.rs`: apresentação das traduções e substituição do nome final.
+- `src/auth_2fa.rs`: apenas o nome do emissor mostrado no QR do autenticador.
+- `src/platform/windows.rs`, `src/ui_session_interface.rs`: títulos/mensagem
+  de saída; nenhuma alteração no fluxo de sessão ou controle de serviço.
+- Flutter `common.dart`, tabbar, páginas de instalação, configurações, início
+  e conexão: título e destinos dos links. Os caminhos de conexão permanecem.
+- Swift/XIB: módulo renomeado em conjunto para manter a resolução das classes.
+- Android Manifest/strings/BootReceiver/MainService, iOS plist e janela Linux:
+  apenas rótulos; pacotes dessas plataformas não são publicados neste lote.
+- Workflows: versão, nome do SBOM e notas da release; nenhum gate removido.
+- Manifestos, locks e arquivos de pacote: somente incremento de versão.
+
+Commit/push, CI e publicação desktop: **em preparação**. A inspeção visual desta
+versão e nova sessão nos equipamentos ainda não foram realizadas. Os resultados
+serão registrados abaixo antes do fechamento da entrega.
+
 ## Servidor próprio — 14/11/2026 — lote 1.5.5
 
 Autorização nesta conversa: implementar tudo necessário para funcionar no VPS

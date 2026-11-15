@@ -298,7 +298,7 @@ pub fn translate_locale(name: String, locale: &str) -> String {
                 }
             }
         }
-        s
+        display_brand(&s)
     };
     if let Some(v) = m.get(&name as &str) {
         if !v.is_empty() {
@@ -313,6 +313,12 @@ pub fn translate_locale(name: String, locale: &str) -> String {
         }
     }
     replace(&name.as_str())
+}
+
+fn display_brand(text: &str) -> String {
+    text.replace("MyUbbeAllDesk", "AllDesk")
+        .replace("RustDesk", "AllDesk")
+        .replace("Rustdesk", "AllDesk")
 }
 
 // Matching pattern is {}
@@ -476,6 +482,36 @@ mod test {
                 }
             }
         }
+    }
+
+    #[test]
+    fn alldesk_brand_covers_titles_attribution_and_server_messages() {
+        for key in [
+            "About RustDesk",
+            "powered_by_me",
+            "upgrade_rustdesk_server_pro_to_{1.2}_tip",
+            "connecting_status",
+        ] {
+            let displayed = super::translate_locale(key.to_owned(), "en");
+            assert!(displayed.contains("AllDesk"));
+            assert!(!displayed.to_lowercase().contains("rustdesk"));
+        }
+        let upgrade = super::translate_locale(
+            "upgrade_rustdesk_server_pro_to_{1.2}_tip".to_owned(),
+            "en",
+        );
+        assert!(upgrade.contains("1.2"));
+    }
+
+    #[test]
+    fn alldesk_brand_preserves_localized_text_and_technical_links() {
+        assert_eq!(super::display_brand("Sobre RustDesk"), "Sobre AllDesk");
+        assert_eq!(
+            super::display_brand("Conectando à rede do MyUbbeAllDesk..."),
+            "Conectando à rede do AllDesk..."
+        );
+        let url = "https://rustdesk.com/docs/en/client/mac/#enable-permissions";
+        assert_eq!(super::display_brand(url), url);
     }
 
     #[test]

@@ -14,8 +14,40 @@ lazy_static::lazy_static! {
     static ref CURRENT_2FA: Mutex<Option<(TOTPInfo, TOTP)>> = Mutex::new(None);
 }
 
-const ISSUER: &str = "RustDesk";
+const ISSUER: &str = "AllDesk";
 const TAG_LOGIN: &str = "Connection";
+
+#[cfg(test)]
+mod branding_tests {
+    #[test]
+    fn authenticator_shows_alldesk_without_changing_existing_codes() {
+        use super::*;
+
+        let info = TOTPInfo {
+            name: "test-device".to_owned(),
+            secret: b"01234567890123456789".to_vec(),
+            digits: 6,
+            created_at: 0,
+        };
+        let current = info.new_totp().unwrap();
+        let previous = TOTP::new(
+            Algorithm::SHA1,
+            info.digits,
+            1,
+            30,
+            info.secret,
+            Some("RustDesk Connection".to_owned()),
+            info.name,
+        )
+        .unwrap();
+        assert!(current.get_url().contains("AllDesk"));
+        assert!(!current.get_url().contains("RustDesk"));
+        assert_eq!(
+            current.generate(1_234_567_890),
+            previous.generate(1_234_567_890)
+        );
+    }
+}
 
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct TOTPInfo {

@@ -48,6 +48,11 @@ import 'package:flutter_hbb/native/common.dart'
 import 'package:flutter_hbb/utils/http_service.dart' as http;
 
 final globalKey = GlobalKey<NavigatorState>();
+
+const alldeskWebsite = 'https://github.com/gleidsoncunha-dev/myubbe-alldesk';
+const alldeskDownloads = '$alldeskWebsite/releases';
+const alldeskPrivacy = '$alldeskWebsite/blob/master/docs/PRIVACIDADE.md';
+const alldeskLicense = '$alldeskWebsite/blob/master/LICENCE';
 final navigationBarKey = GlobalKey();
 
 final isAndroid = isAndroid_;
@@ -3778,7 +3783,7 @@ Widget loadPowered(BuildContext context) {
     cursor: SystemMouseCursors.click,
     child: GestureDetector(
       onTap: () {
-        launchUrl(Uri.parse('https://rustdesk.com'));
+        launchUrl(Uri.parse(alldeskWebsite));
       },
       child: Opacity(
           opacity: 0.5,
