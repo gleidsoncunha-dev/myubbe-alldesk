@@ -72,10 +72,50 @@ Revisão de minimização realizada. Superfície existente alterada:
   `2f7f689dd` foram canceladas por substituição pelo head corrigido. Não
   contam como aprovadas.
 
-Publicação desktop: **a iniciar**. A inspeção visual desta versão e uma nova
-sessão nos equipamentos ainda não foram realizadas. Não foi instalado ou
-reiniciado o cliente local. Este commit documental registra o mesmo lote já
-versionado; mantém 1.5.6.
+### Publicação concluída e smoke somente de leitura
+
+- [Pré-release AllDesk 1.5.6](https://github.com/gleidsoncunha-dev/myubbe-alldesk/releases/tag/myubbe-v1.5.6):
+  **publicada**. API confirma `draft=false`, `prerelease=true`, seis pacotes
+  desktop (EXE/MSI Windows x64/ARM64 e DMG Mac Intel/Apple Silicon),
+  `alldesk.sbom.json` e os dois arquivos públicos de configuração: nove arquivos.
+- [Workflow de publicação 43677183864](https://github.com/gleidsoncunha-dev/myubbe-alldesk/actions/runs/43677183864):
+  **success**, quatro builds e job final de promoção do rascunho. Windows nas
+  duas arquiteturas passou no gate de versão/produto; ambos os Macs passaram
+  no gate do bundle e na criação do DMG. O resultado de testes Rust/Dart
+  permanece separado, na CI completa da PR citada acima.
+- Tag `myubbe-v1.5.6` aponta para
+  `f7b5693263173ba78e0f32976d574f3e153db927`, sem retag. Comparação contra o
+  head testado `32c781276`: somente `docs/HANDOFF.md` difere; o código do
+  aplicativo, workflows e demais arquivos são os mesmos já aprovados.
+- Destino principal conferido sem autenticação: página pública da release,
+  downloads diretos Windows x64 EXE e Mac Intel DMG, e página de privacidade
+  do próprio projeto retornaram **HTTP 200**.
+- EXE e MSI x64 baixados e inspecionados sem executar ou instalar. Tamanhos
+  e SHA256 coincidem com os digests da API. Conferidos novamente após a
+  publicação: os arquivos públicos são os mesmos inspecionados no rascunho.
+  EXE: produto `MyUbbe AllDesk`, versão `1.5.6`, arquivo original
+  `MyUbbeAllDesk.exe`; Authenticode `NotSigned`, conforme o perfil existente.
+- MSI aberto com Windows Installer em modo 0, somente leitura:
+  `ProductName=MyUbbeAllDesk`, `Manufacturer=MyUbbe`,
+  `ProductVersion=1.5.6.29912006`,
+  `UpgradeCode={2D68606F-3A5E-57AB-BFC4-299DE98249AE}`. O identificador de
+  atualização permanece igual ao da distribuição MyUbbe anterior.
+
+| Arquivo Windows x64 | SHA256 conferido |
+| --- | --- |
+| EXE | `d2f996775ebf375a1f42b7520a65586d590a752819a4cd6ee88da00f6a3a8aab` |
+| MSI | `c2ffe189d597eaf678899d9a063048f6ac6a54c0228cf3e84d3075d71af7b36e` |
+
+**Limites:** a inspeção visual completa desta versão e uma nova sessão nos
+equipamentos ainda não foram realizadas. O cliente local não foi instalado
+ou reiniciado. Os testes de marca automatizados e o smoke dos arquivos não
+substituem abertura e inspeção visual no Windows/Mac físicos. O perfil de
+assinatura permanece o existente: Windows sem assinatura comercial; Mac ad
+hoc, sem notarização. A sessão real confirmada pelo titular no lote anterior
+continua registrada no histórico, sem ser atribuída a esta versão.
+
+Commit documental de fechamento mantém **1.5.6**, por registrar o mesmo lote
+já versionado e publicado. A tag e os artefatos não são alterados.
 
 ## Servidor próprio — 14/11/2026 — lote 1.5.5
 
