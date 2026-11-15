@@ -3,6 +3,12 @@
 Copie o bloco abaixo para uma conversa do Codex no VS Code do MacBook.
 O trabalho usa as ferramentas locais do Mac; o conector remoto não é necessário.
 
+**Resultado recebido em 14/11/2026:** o Codex local confirmou sessão segura e
+vídeo H.265 ao Windows, com reconexão e retomada às 20:58:43 BRT. O Mac está
+na versão 1.5.4, ID 282548778, usando o perfil e o servidor abaixo. Preservar
+a sessão funcionando; reutilizar o roteiro para nova investigação se houver
+regressão. Inspeção visual automatizada ficou bloqueada pela Acessibilidade.
+
 ```text
 Configure e diagnostique o MyUbbe AllDesk neste MacBook Intel com macOS
 Monterey 12.7.6. Confira também a versão real do sistema e a arquitetura.

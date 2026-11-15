@@ -54,16 +54,16 @@ Supabase/Redis/WAHA ok. Sem alteração de serviço, banco, DNS, Caddy ou ambien
 
 Controle nativo de janelas Windows: pipe indisponível, erro 2. Conector Mac:
 erro interno nas tentativas de listar projetos e consultar o binding. Sessão
-visual no MacBook ainda não comprovada. Perfil importável e guia preparados.
-Não se declara teste real Mac → Windows concluído. CI dos pacotes tem estado
-próprio no handoff; publicação do servidor não equivale à publicação dos DMGs.
+visual automatizada no MacBook indisponível. O relatório local posterior
+confirmou sessão real e vídeo, conforme a seção abaixo. CI, logs de sessão e
+inspeção visual direta são evidências distintas; publicação não comprova vídeo.
 
 ## Atualização final
 
 Por volta de 20:14 BRT, consulta externa de presença confirmou simultaneamente
 `282548778=true` e `496264126=true`. O novo ID corresponde aos primeiros
-dígitos visíveis na captura do Mac; atribuição e visualização ainda aguardam
-confirmação do titular. O VPS passou a ter dois registros. Serviços continuam
+dígitos visíveis na captura do Mac e foi depois confirmado pelo aplicativo no
+relatório local. O VPS passou a ter dois registros. Serviços continuam
 running, zero reinícios, versão de deploy 1.5.5. Windows em execução observado
 em 1.5.4+72. CRM 1.98.31 healthy, Supabase/Redis/WAHA ok. TCP 21115/21116/21117
 externos acessíveis. Isso comprova presença, não autenticação ou vídeo.
@@ -72,3 +72,22 @@ Release de pacotes 1.5.5 publicada às 19:21:43 BRT; CI desktop completa aprovad
 às 20:26:20 BRT, com Windows x64/ARM64 e Mac Intel/ARM64. Resultado de build,
 testes e metadados separado do teste real nos equipamentos. O titular pediu
 instrução para o Codex local do VS Code: [prompt preparado](PROMPT_SUPORTE_MAC.md).
+
+## Sessão real relatada pelo Codex local no Mac
+
+O titular forneceu o relatório local: Monterey 12.7.6 Intel, aplicativo
+1.5.4 em `/Applications/MyUbbeAllDesk.app`, ID 282548778 e perfil efetivo
+`~/Library/Preferences/com.carriez.MyUbbeAllDesk/`. Host/relay/chave conferem;
+API vazia. TCP acessível e respostas de registro UDP confirmadas nos logs,
+com latência pontual de 22–27 ms.
+
+Sessão direta e segura ao Windows 496264126, monitor 1920×1080, decodificador
+H.265 iniciado e retomada do vídeo após reset de conexão às 20:58:43 BRT,
+conforme o relatório recebido em 14/11/2026. Sessão e configurações preservadas;
+nenhuma senha, identidade, permissão ou proteção foi alterada pelo agente local.
+
+Avisos da API Pro 21114 permaneceram sem impedir a sessão. Não houve abertura
+de porta ou ajuste de infraestrutura para silenciá-los. Acessibilidade bloqueou
+a inspeção visual automatizada; mouse/teclado e funcionamento após reboot/logout
+não foram explicitamente homologados. Acesso não assistido continua separado,
+dependendo de configuração de senha permanente e serviço no Windows.

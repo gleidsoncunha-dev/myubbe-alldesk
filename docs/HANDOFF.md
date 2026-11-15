@@ -30,10 +30,12 @@ nativos permanecem nos runners Windows/Mac. Novo workflow verifica Compose,
 sintaxe Bash e testes do configurador em Linux.
 
 Commit/push, CIs e publicações do servidor e dos pacotes: **concluídos**.
-Sessão visual Mac → Windows: **ainda sem confirmação de sucesso**. Controle
-nativo do Windows indisponível: pipe não encontrado (erro 2). O conector Mac
-retornou erro interno. O titular enviou captura do AllDesk aberto no Mac, mas
-não houve inspeção direta/autenticada do equipamento por nossas ferramentas.
+Sessão real Mac → Windows: **confirmada pelo relatório local recebido do titular**,
+com conexão segura, vídeo H.265 e retomada após reconexão. A confirmação visual
+automatizada ficou bloqueada pela Acessibilidade; mouse/teclado não foram
+explicitamente homologados no relatório. Controle nativo Windows indisponível
+(pipe, erro 2) e conector Mac com erro interno nesta sessão; as evidências do
+Mac vieram do Codex executado localmente pelo titular.
 
 CI de configuração do servidor `43642250910`: **success**. Primeira tentativa
 de deploy interrompida antes de iniciar serviços: `git archive` com autocrlf
@@ -84,8 +86,8 @@ O titular apresentou captura do Mac às 18:26 com o destino `496264126` offline.
 Consulta externa de presença pelo protocolo `OnlineRequest` na porta 21115
 confirmou esse Windows **online** no servidor próprio (bit de estado 0x80).
 Na primeira consulta, SQLite do VPS continha somente o registro Windows.
-Orientados os três campos de Rede para o Mac;
-conexão visual ainda aguarda confirmação. O titular informou que tentaria
+Orientados os três campos de Rede para o Mac; naquela rodada a conexão visual
+ainda aguardava confirmação. O titular informou que tentaria
 reconectar seu `codex-mcp`; listagem e consulta do binding continuaram falhando
 com erro interno. Nenhum comando ou alteração foi executado no Mac.
 
@@ -97,8 +99,8 @@ perfis de usuário/serviço e preservação de credenciais e proteções do macO
 **Nova conferência por volta de 20:14 BRT:** VPS passou a conter dois registros;
 consulta externa `OnlineRequest` confirmou `282548778=true` e
 `496264126=true` simultaneamente. O novo ID começa com os dígitos visíveis
-na captura do Mac, mas a atribuição ao equipamento aguarda confirmação do
-titular. Orientado encerrar a tentativa antiga e iniciar nova conexão.
+na captura do Mac; posteriormente o relatório local confirmou que esse é o ID
+do equipamento. Orientado encerrar a tentativa antiga e iniciar nova conexão.
 Serviços running, zero reinícios; CRM 1.98.31 healthy, Supabase/Redis/WAHA ok;
 portas TCP externas acessíveis. Cliente Windows observado ainda em 1.5.4+72.
 Registro/presença não comprovam autenticação ou visualização da sessão.
@@ -131,10 +133,37 @@ Mac ad hoc, como no lote anterior; nenhuma notarização/assinatura comercial no
 
 O Windows em execução nesta homologação é o portátil 1.5.4, configurado para o
 VPS sem alterar suas credenciais. Os novos instaladores 1.5.5 estão publicados,
-mas não foram instalados automaticamente nos equipamentos. A sessão visual
-Mac → Windows continua aguardando o resultado da nova tentativa do titular,
-após os dois IDs serem confirmados online. O prompt local no VS Code permite
-continuar o diagnóstico sem depender do conector remoto indisponível.
+mas não foram instalados automaticamente nos equipamentos. O relatório local
+posterior confirmou o Mac também em 1.5.4. O prompt local no VS Code permitiu
+o diagnóstico sem depender do conector remoto indisponível.
+
+### Retorno do Codex local no Mac — 14/11/2026
+
+Relatório fornecido pelo titular, sem inspeção independente nossa do Mac:
+
+- Monterey 12.7.6, Intel x86_64, MyUbbe AllDesk **1.5.4** instalado em
+  `/Applications/MyUbbeAllDesk.app`; cópia instalada em execução.
+- ID Mac **282548778**, obtido pelo aplicativo. Perfil efetivo
+  `~/Library/Preferences/com.carriez.MyUbbeAllDesk/`, rede em
+  `MyUbbeAllDesk2.toml`; host/relay `195.182.200.177`, chave correta, API vazia.
+  O agente local não encontrou serviço separado em execução no Mac.
+- TCP 21115/21116/21117 acessíveis e respostas reais de registro UDP 21116 nos
+  logs, com latência pontual de 22–27 ms.
+- Sessão direta e segura ao Windows **496264126**, monitor 1920×1080 e
+  decodificador H.265 iniciado. Após `Connection reset by peer (os error 54)`,
+  houve reconexão e retomada do vídeo às **20:58:43 BRT**, conforme o relatório.
+- Configuração e sessão ativa preservadas; sem reinício/atualização do app ou
+  alterações de identidade, senhas, permissões e proteções.
+- Avisos de conexão recusada à API auxiliar 21114 e timeout no fallback
+  coexistiram com a sessão funcionando. Server OSS não fornece essa API Pro;
+  não foi aberta a porta nem criado um endpoint artificial para silenciar o log.
+- Acessibilidade impediu a confirmação visual automatizada. Visualização
+  manual da janela e teste de mouse/teclado permanecem verificações distintas.
+
+O titular também relatou solicitação de senha no Mac e tela de aceite no
+Windows. Acesso não assistido não foi configurado neste lote; foram fornecidas
+instruções para senha permanente e instalação/serviço no Windows. Não se
+declara acesso após reboot/logout ou homologação de acesso não assistido.
 
 Git: implementação `eb095db8f`, correção do exportador/deploy `d3075efce` e
 fechamentos documentais enviados a `origin/master` sem force. Tag
