@@ -75,6 +75,7 @@ jobs:
           subprocess.run(['gh', 'release', 'upload', tag, str(config_path), 'deploy/client-config.json'], check=True)
           notes = f'''MyUbbe AllDesk {version}.
 
+          - Ícone do aplicativo, do instalador e da bandeja com o M verde, para diferenciar o AllDesk dos demais apps MyUbbe.
           - Marca AllDesk em títulos, menus, mensagens e rodapé; links de suporte e downloads do próprio projeto.
           - Clientes Windows x64/ARM64 e Mac Intel/Apple Silicon.
           - EXE portátil e MSI para Windows; DMG para Mac.

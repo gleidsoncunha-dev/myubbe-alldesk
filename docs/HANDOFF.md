@@ -1,5 +1,23 @@
 # MyUbbe AllDesk — handoff
 
+## Ícone verde — 25/11/2026 — lote 1.5.7
+
+Pedido do titular: mudar a cor da logo do aplicativo para diferenciar o
+AllDesk do MyUbbe Control e dos demais apps MyUbbe, que usam o mesmo "M" azul.
+O "M" passou a verde-esmeralda; o fundo azul-marinho, o formato e os tamanhos
+foram preservados. Recoloração feita a partir dos próprios arquivos aprovados,
+sem redesenho.
+
+Arquivos de imagem alterados: `res/icon.png`, `res/mac-icon.png`,
+`flutter/assets/icon.png`, `res/icon.ico`, `res/tray-icon.ico`,
+`flutter/windows/runner/resources/app_icon.ico` (todos os tamanhos 16–256) e
+`flutter/macos/Runner/AppIcon.icns`. A logo escrita `myubbe` (`logo*.png`) e o
+`icon.svg` herdado, usado só como fallback, não mudaram.
+
+Versão do cliente **1.5.7**, Flutter **1.5.7+75**, com manifestos, lockfiles,
+workflow e metadados de pacote sincronizados; notas da release citam o ícone.
+Sem alteração de código, identificadores, servidor ou configuração de rede.
+
 ## Marca AllDesk — lote 1.5.6
 
 Pedido do titular: substituir os nomes RustDesk por AllDesk no projeto.
