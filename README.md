@@ -3,7 +3,7 @@
 Cliente de acesso remoto da MyUbbe para Windows e macOS, com identidade visual
 MyUbbe, servidor próprio e interface em vários idiomas.
 
-Versão do cliente: **1.5.6**. [Baixar instaladores](https://github.com/gleidsoncunha-dev/myubbe-alldesk/releases).
+Versão do cliente: **1.5.7**. [Baixar instaladores](https://github.com/gleidsoncunha-dev/myubbe-alldesk/releases).
 Os pacotes são publicados como pré-releases de teste: EXE e MSI para Windows
 x64/ARM64 e DMG para Mac Intel/Apple Silicon.
 
